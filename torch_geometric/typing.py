@@ -54,12 +54,19 @@ except Exception as e:
     WITH_PYG_LIB = False
     WITH_GMM = False
     WITH_SEGMM = False
-    WITH_SAMPLED_OP = False
-    WITH_INDEX_SORT = False
-    WITH_METIS = False
-    WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
+WITH_SAMPLED_OP = False
+WITH_INDEX_SORT = False
+WITH_METIS = False
+WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
 
 try:
+    from torch_cluster import neighbor_sampler
+    WITH_SAMPLED_OP = True
+    WITH_INDEX_SORT = True
+    WITH_METIS = True
+    WITH_WEIGHTED_NEIGHBOR_SAMPLE = True
+except ImportError:
+    pass
     import torch_scatter  # noqa
     WITH_TORCH_SCATTER = True
 except Exception as e:
