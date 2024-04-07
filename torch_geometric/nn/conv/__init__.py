@@ -2,7 +2,7 @@ from .message_passing import MessagePassing
 from .simple_conv import SimpleConv
 from .gcn_conv import GCNConv
 from .cheb_conv import ChebConv
-from .sage_conv import SAGEConv
+from torch_geometric.nn.conv import SAGEConv  # Edit this line
 from .sage_conv_temporal import SAGEConv_temporal
 from .cugraph.sage_conv import CuGraphSAGEConv
 from .graph_conv import GraphConv
