@@ -307,32 +307,16 @@ class NeighborSampler(BaseSampler):
             if (torch_geometric.typing.WITH_PYG_LIB
                     and self.subgraph_type != SubgraphType.induced):
                 # TODO (matthias) Ideally, `seed` inherits dtype from `colptr`
-                colptrs = list(self.colptr_dict.values())
-                dtype = colptrs[0].dtype if len(colptrs) > 0 else torch.int64
-                seed = {k: v.to(dtype) for k, v in seed.items()}
+args = (
+    self.node_types,
+    self.edge_types,
+)
 
-                def check_temporal():
-                    for k, edge_type_ in enumerate(self.colptr_dict.keys()):
-                        # print('edge_type = ',edge_type_)
-                        colptr = self.colptr_dict[edge_type_]
-                        row = self.row_dict[edge_type_]
-                        for i in range(self.num_nodes[self.node_types[k]]):
-                            col_start = colptr[i]
-                            col_end = colptr[i + 1]
-                            # print(f'node = {i}')
-                            # print('col_start = ', col_start)
-                            # print('col_end = ', col_end)
-                            for j in range(col_start, col_end - 1):
-                                # print(self.edge_time[edge_type_][j], ' ', self.edge_time[edge_type_][j+1])
-                                # print(f'col={i}, row={j}')
-                                assert self.edge_time[edge_type_][
-                                    j] <= self.edge_time[edge_type_][j + 1]
+# The check for `SAGEConv_temporal` is not necessary anymore
+# del self.edge_time
+# assert len(self.edge_time) == len(self.edge_types), 'Number of edge_time arrays mismatch with edge_types'
+# assert all(isinstance(t, torch.Tensor) for t in self.edge_time.values()), 'edge_time should be torch.Tensor'
 
-                #check_temporal()
-                # start_time = time_measure.time()
-                args = (
-                    self.node_types,
-                    self.edge_types,
                     self.colptr_dict,
                     self.row_dict,
                     seed,

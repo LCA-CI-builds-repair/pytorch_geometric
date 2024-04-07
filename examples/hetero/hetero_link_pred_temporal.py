@@ -9,12 +9,7 @@ import torch_geometric.transforms as T
 from torch_geometric.datasets import MovieLens
 from torch_geometric.loader import LinkNeighborLoader
 from torch_geometric.nn import to_hetero
-from torch_geometric.nn.conv import SAGEConv
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--use_weighted_loss', action='store_true',
-                    help='Whether to use weighted MSE loss.')
-args = parser.parse_args()
+from torch_geometric.nn.conv import SAGEConv, SAGEConv_temporal
 
 if torch.cuda.is_available():
     device = torch.device('cuda')
