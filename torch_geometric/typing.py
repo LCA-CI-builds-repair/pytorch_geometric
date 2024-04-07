@@ -54,10 +54,10 @@ except Exception as e:
     WITH_PYG_LIB = False
     WITH_GMM = False
     WITH_SEGMM = False
-    WITH_SAMPLED_OP = False
-    WITH_INDEX_SORT = False
-    WITH_METIS = False
-    WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
+WITH_SAMPLED_OP = False
+WITH_INDEX_SORT = False
+WITH_METIS = False
+WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
 
 try:
     import torch_scatter  # noqa
