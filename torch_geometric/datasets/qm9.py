@@ -155,6 +155,8 @@ class QM9(InMemoryDataset):
     def __init__(
         self,
         root: str,
+[change]
+        ):
         transform: Optional[Callable] = None,
         pre_transform: Optional[Callable] = None,
         pre_filter: Optional[Callable] = None,
