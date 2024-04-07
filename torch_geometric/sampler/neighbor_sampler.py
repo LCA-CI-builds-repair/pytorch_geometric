@@ -333,6 +333,20 @@ class NeighborSampler(BaseSampler):
                 args = (
                     self.node_types,
                     self.edge_types,
+
+                    # Add the following lines to the end of the function:
+                    seed,
+                    self.edge_time,
+                    self.temporal_neighbors,
+                    self.temporal_edge_index,
+                    self.temporal_node_types,
+                )
+                return self.neighbor_sampler(
+                    *args,
+                    return_type='list',
+                    return_edge_weight=self.return_edge_weight,
+                    add_self_loops=self.add_self_loops,
+                )
                     self.colptr_dict,
                     self.row_dict,
                     seed,
