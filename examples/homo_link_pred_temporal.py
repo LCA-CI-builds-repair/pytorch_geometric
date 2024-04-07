@@ -17,6 +17,10 @@ parser.add_argument('--use_weighted_loss', action='store_true',
                     help='Whether to use weighted MSE loss.')
 args = parser.parse_args()
 
+# Add the following lines to the end of the file:
+import torch_geometric.typing
+from torch_geometric.nn.conv import SAGEConv_temporal
+
 if torch.cuda.is_available():
     device = torch.device('cuda')
 elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
