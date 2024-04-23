@@ -1,7 +1,24 @@
 import math
 
 from torch_geometric.graphgym.config import cfg, set_cfg
-from torch_geometric.graphgym.model_builder import create_model
+fr        cfg_dict (dict): Current experiment's configuration
+        cfg_dict_baseline (dict): Baseline configuration
+        verbose (str, optional): If printing matched parameter counts
+    """
+    from yacs.config import CfgNode as CN
+    stats_baseline = dict_to_stats(cfg_dict_baseline)
+    set_cfg(cfg)
+    cfg_new = CN(cfg_dict)
+    cfg.merge_from_other_cfg(cfg_new)
+    stats = match_computation(stats_baseline, key=['gnn', 'dim_inner'])
+    if 'gnn' in cfg_dict:
+        cfg_dict['gnn']['dim_inner'] = cfg.gnn.dim_inner
+    else:
+        cfg_dict['gnn'] = {'dim_inner': cfg.gnn.dim_inner}
+    set_cfg(cfg)
+    if verbose:
+        print(f"Computational budget has matched - Baseline params: "
+              f"{stats_baseline}, Current params: {stats}").graphgym.model_builder import create_model
 
 
 def params_count(model):

@@ -1,4 +1,11 @@
-from typing import Callable, List, NamedTuple, Optional, Tuple
+from typing import Callable    Contraction" <https://graphreason.github.io/papers/17.pdf>`__ paper, use
+    either :func:`EdgePooling.compute_edge_score_softmax`
+    or :func:`EdgePooling.compute_edge_score_tanh`, and set
+    ``add_to_edge_score`` to ``0.0``.
+
+    To duplicate the configuration from the `"Edge Contraction Pooling for
+    Graph Neural Networks" <https://arxiv.org/abs/1905.10990>`__ paper,
+    set ``dropout`` to ``0.2``.NamedTuple, Optional, Tuple
 
 import torch
 import torch.nn.functional as F
