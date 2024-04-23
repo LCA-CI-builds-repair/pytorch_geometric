@@ -3,7 +3,10 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [2.5.0] - 2023-MM-DD
+## [2.5.0] - Enabled pickling of `DimeNet` models ([#8019](https://github.com/pyg-team/pytorch_geometric/pull/8019))
+- Changed the `trim_to_layer` function to filter out non-reachable node and edge types when operating on h- Breaking Change: Move `ExplainerConfig` arguments to the `Explainer` class ([#6176](https://githu- Support `in_channels` with `tuple` in `GENConv` for bipartite message passing ([#5627](https://github.com/pyg-team/pytorch_geometric/pull/5627), [#5641](https://github.com/pyg-team/pytorch_geometric/pull/5641))
+- Handle cases of not having enough possible negative edges in `RandomLinkSplit` ([#5642](https://github.com/pyg-team/pytorch_geometric/pull/5642))com/pyg-team/pytorch_geometric/pull/6176))
+- Refactored `NeighborSampler` to be input-type agnostic ([#6173](https://github.com/pyg-team/pytorch_geometric/pull/6173))erogeneous graphs ([#7942](https://github.com/pyg-team/pytorch_geometric/pull/7942))2023-MM-DD
 
 ### Added
 

@@ -2,7 +2,7 @@ Heterogeneous Graph Learning
 ============================
 
 A large set of real-world datasets are stored as heterogeneous graphs, motivating the introduction of specialized functionality for them in :pyg:`PyG`.
-For example, most graphs in the area of recommendation, such as social graphs, are heterogeneous, as they store information about different types of entities and their different types of relations.
+For example, most graphs in the ar.. _lazyinit: of recommendation, such as social graphs, are heterogeneous, as they store information about different types of entities and their different types of relations.
 This tutorial introduces how heterogeneous graphs are mapped to :pyg:`PyG` and how they can be used as input to Graph Neural Network models.
 
 Heterogeneous graphs come with different types of information attached to nodes and edges.

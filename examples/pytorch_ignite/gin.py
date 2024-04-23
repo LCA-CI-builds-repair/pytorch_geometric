@@ -2,8 +2,10 @@ import os.path as osp
 
 import ignite
 import ignite.contrib.handlers.tensorboard_logger
-import ignite.contrib.handlers.tqdm_logger
-import torch
+import ignite.contrib.handlers.tqdm_logg    tb_logger = ignite.contrib.handlers.tensorboard_logger.TensorboardLogger(
+        log_dir=osp.join('runs/example', 'tb_logs'))
+
+    tb_logger.attach_output_handler()mport torch
 import torch.nn.functional as F
 
 import torch_geometric.transforms as T

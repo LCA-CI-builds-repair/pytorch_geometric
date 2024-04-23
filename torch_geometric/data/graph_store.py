@@ -1,4 +1,6 @@
-r"""This class defines the abstraction for a backend-agnostic graph store. The
+r"""This class defines the abstraction for a backend-agnos    which attributes must be provided for indexing calls. :class:`GraphStore`
+    implementations can define a different ordering by overriding
+    :meth:`EdgeAttr.__init__`.raph store. The
 goal of the graph store is to abstract away all graph edge index memory
 management so that varying implementations can allow for independent scale-out.
 

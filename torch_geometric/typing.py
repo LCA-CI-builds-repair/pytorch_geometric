@@ -1,6 +1,10 @@
 import inspect
 import os
-import platform
+import        # current GPU and disable `WITH_SEGMM`/`WITH_GMM` if necessary.
+        # TODO Drop this code block once `segment_matmul` is fixed.
+        try:
+            x = torch.randn(3, 4, device='cuda')
+            ptr = torch.tensor([0, 2, 3], device='cuda')form
 import sys
 import warnings
 from typing import Dict, List, Optional, Tuple, Union

@@ -1,4 +1,6 @@
-r"""This class defines the abstraction for a backend-agnostic feature store.
+r"""This class defines the abstraction for a backe    which attributes must be provided for indexing calls. :class:`FeatureStore`
+    implementations can define a different ordering by overriding
+    :meth:`TensorAttr.__init__`.gnostic feature store.
 The goal of the feature store is to abstract away all node and edge feature
 memory management so that varying implementations can allow for independent
 scale-out.
