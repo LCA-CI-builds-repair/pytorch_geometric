@@ -3,7 +3,8 @@ import os.path as osp
 
 import torch
 import torch.nn.functional as F
-from torch.nn import GRU, Linear, ReLU, Sequential
+from torch.nn import GRU, Linear, ReLU, S# Modify the code in the file examples/qm9_nn_conv.py to address the CI issue and ensure successful test execution.
+# Implement necessary changes to resolve the error and follow best practices for effective resolution.
 
 import torch_geometric.transforms as T
 from torch_geometric.datasets import QM9

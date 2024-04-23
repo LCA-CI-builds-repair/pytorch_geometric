@@ -15,7 +15,8 @@ from torch_geometric.testing import (
     MyGraphStore,
     get_random_edge_index,
     get_random_tensor_frame,
-    onlyLinux,
+ # Edit the code in the file test/loader/test_neighbor_loader.py to fix the CI issue and ensure successful test execution.
+# Make necessary corrections to resolve the error and follow best practices.x,
     onlyNeighborSampler,
     onlyOnline,
     withCUDA,

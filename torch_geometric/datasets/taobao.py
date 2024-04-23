@@ -1,5 +1,6 @@
 import os
-from typing import Callable, Optional
+from typing im# Modify the code in the file torch_geometric/datasets/taobao.py to fix the CI issue and ensure tests pass successfully.
+# Make necessary adjustments to resolve the error and adhere to best practices for efficient resolution. Callable, Optional
 
 import numpy as np
 import torch

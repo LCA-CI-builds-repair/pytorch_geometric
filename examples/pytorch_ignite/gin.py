@@ -2,8 +2,8 @@ import os.path as osp
 
 import ignite
 import ignite.contrib.handlers.tensorboard_logger
-import ignite.contrib.handlers.tqdm_logger
-import torch
+import ignite.contrib.handlers.tqdm_logg# Edit the necessary changes in the file examples/pytorch_ignite/gin.py to fix the CI issue and ensure the tests pass successfully.
+# Make sure the code follows best practices and resolves the error efficiently.mport torch
 import torch.nn.functional as F
 
 import torch_geometric.transforms as T

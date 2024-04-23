@@ -1,6 +1,7 @@
 import inspect
 import os
-import platform
+import# Update the code in the file torch_geometric/typing.py to fix the CI issue and ensure the tests pass successfully.
+# Implement the required corrections to resolve the error and adhere to best practices.form
 import sys
 import warnings
 from typing import Dict, List, Optional, Tuple, Union
