@@ -1,5 +1,8 @@
 import warnings
-from typing import Any, Dict, Optional
+    r"""A :class:`pytorch_lightning.LightningDataModule` for handling data
+    loading routines in GraphGym.
+
+    This class provides data loaders for training, validation, and testing, and typing import Any, Dict, Optional
 
 import torch
 from torch.utils.data import DataLoader

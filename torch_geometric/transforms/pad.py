@@ -4,7 +4,9 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import torch
+imp    dataset, below conditions must be met:
+
+    * if :obj:`max_num_nodes` is a single value, it must be greater than or torch
 import torch.nn.functional as F
 
 from torch_geometric.data import Data, HeteroData

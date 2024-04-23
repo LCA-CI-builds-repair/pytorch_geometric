@@ -7,7 +7,12 @@ import torch
 
 from torch_geometric.data import Data, HeteroData, OnDiskDataset
 from torch_geometric.loader import DataLoader
-from torch_geometric.testing import (
+from torch_geom    for _ in range(2):
+        print(f'Start loading {len(loader)} mini-batches ... ', end='')
+        t = time.perf_counter()
+        for batch in loader:
+            pass
+        print(f'Done! [{time.perf_counter() - t:.4f}s]')esting import (
     get_random_edge_index,
     get_random_tensor_frame,
     withCUDA,
