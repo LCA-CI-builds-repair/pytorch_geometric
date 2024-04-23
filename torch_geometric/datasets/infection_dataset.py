@@ -1,8 +1,47 @@
 from typing import Any, Callable, Dict, List, Optional, Union
 
 import torch
+        assert isinst        i        for N, L in zip(num_infected_nodes, max_path_length):
+            data_list.append(self.get_graph(N, L))
 
-from torch_geometric.data import InMemoryDataset
+        self.data, self.slices = self.collate(data_list)
+
+    def get_graph(self, num_infected_nodes: int,
+                  max_path_length: int) -> Explanation:
+        data = self.graph_generator()
+
+        perm = torch.randperm(data.num_nodes)
+        x = torch.zeros((data.num_nodes, 2))
+        x[perm[:num_infected_nodes], 1] = 1  # Infected
+        x[perm[num_infected_nodes:], 0] = 1  # Healthy
+
+        y = torch.empty(data.num_nodes, dtype=torch.long)
+        y.fill_(max_path_length)
+        y[perm[:num_infected_nodes]] = 0  # Infected nodes have label `0`.d_nodes) <= 0:
+            raise ValueError(f"'num_infected_nodes' needs to be positive "
+                             f"(got {min(num_infected_nodes)})")
+
+        if any(max_path_length) <= 0:
+            raise ValueError(f"'max_path_length' needs to be positive "
+                             f"(got {min(max_path_length)})")ngth, (int, list))
+
+        if (num_graphs is None and isinstance(num_infected_nodes, int)
+                and isinstance(max_path_length, int)):
+            num_graphs = 1
+
+        if num_graphs is None and isinstance(num_infected_nodes, list):
+            num_graphs = len(num_infected_nodes)
+
+        if num_graphs is None and isinstance(max_path_length, list):
+            num_graphs = len(max_path_length)
+
+        self.graph_generator = GraphGenerator.resolve(
+            graph_generator,
+            **(graph_generator_kwargs or {}),
+        )
+        self.num_infected_nodes = num_infected_nodes if isinstance(num_infected_nodes, list) else [num_infected_nodes] * num_graphs
+        self.max_path_length = max_path_length if isinstance(max_path_length, list) else [max_path_length] * num_graphs
+        self.num_graphs = num_graphsa import InMemoryDataset
 from torch_geometric.datasets.graph_generator import GraphGenerator
 from torch_geometric.explain import Explanation
 from torch_geometric.utils import k_hop_subgraph
