@@ -6,8 +6,21 @@ from typing import Callable, List, Optional
 import torch
 
 from torch_geometric.data import (
-    Data,
-    InMemoryDataset,
+         if not isinstance(out, tuple) or len(out) != 3:
+            raise RuntimeError(
+                "The 'data' object was created by an older version of PyG. "
+                "If this error occurred while loading an already existing "
+                "dataset, remove the 'processed/' directory in the dataset's "
+                "root folder and try again.")
+        data, self.slices, self.sizes = out
+        self.data = Data.from_dict(data) if isinstance(data, dict) else data
+
+        if self._data.x is not None and not use_node_attr:
+            num_node_attributes = self.num_node_attributes
+            self._data.x = self._data.x[:, num_node_attributes:]
+        if self._data.edge_attr is not None and not use_edge_attr:
+            num_edge_attrs = self.num_edge_attributes
+            self._data.edge_attr = self._data.edge_attr[:, num_edge_attrs:]MemoryDataset,
     download_url,
     extract_zip,
 )

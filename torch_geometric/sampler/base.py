@@ -17,7 +17,22 @@ from torch_geometric.utils.mixin import CastMixin
 
 
 class DataType(Enum):
-    r"""The data type a sampler is operating on."""
+    r"""The dat    r"""An abstract base class that initializes a graph sampler and provides
+    :meth:`sample_from_nodes` and :meth:`sample_from_edges` routines.
+
+    .. note ::
+
+        Any data stored in the sampler will be *replicated* across data loading
+        workers that use the sampler since each data loading worker holds its
+        own instance of a sampler.
+        As such, it is recommended to limit the amount of information stored in
+        the sampler.
+    """
+    def sample_from_nodes(
+        self,
+        index: NodeSamplerInput,
+        **kwargs,
+    ) -> Union[HeteroSamplerOutput, SamplerOutput]: is operating on."""
     homogeneous = 'homogeneous'
     heterogeneous = 'heterogeneous'
     remote = 'remote'

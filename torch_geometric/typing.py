@@ -3,7 +3,25 @@ import os
 import platform
 import sys
 import warnings
-from typing import Dict, List, Optional, Tuple, Union
+from typing importry:
+    import torch_spline_conv  # noqa
+    WITH_TORCH_SPLINE_CONV = True
+except Exception as e:
+    if not isinstance(e, ImportError):  # pragma: no cover
+        warnings.warn(
+            f"An issue occurred while importing 'torch-spline-conv'. "
+            f"Disabling its usage. Stacktrace: {e}")
+    WITH_TORCH_SPLINE_CONV = False
+
+try:
+    import torch_sparse  # noqa
+    from torch_sparse import SparseStorage, SparseTensor
+    WITH_TORCH_SPARSE = True
+except Exception as e:
+    if not isinstance(e, ImportError):  # pragma: no cover
+        warnings.warn(f"An issue occurred while importing 'torch-sparse'. "
+                      f"Disabling its usage. Stacktrace: {e}")
+    WITH_TORCH_SPARSE = Falseal, Tuple, Union
 
 import numpy as np
 import torch

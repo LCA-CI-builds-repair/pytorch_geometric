@@ -1,4 +1,11 @@
-from collections import defaultdict
+from colfrom torch_geometric.data.data import BaseData
+from torch_geometric.data.storage import BaseStorage, NodeStorage
+from torch_geometric.typing import (
+    SparseTensor,
+    TensorFrame,
+    torch_frame,
+    torch_sparse,
+) import defaultdict
 from collections.abc import Mapping, Sequence
 from typing import Any, List, Optional, Tuple
 

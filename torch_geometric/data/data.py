@@ -21,7 +21,26 @@ from torch import Tensor
 
 from torch_geometric.data import EdgeAttr, FeatureStore, GraphStore, TensorAttr
 from torch_geometric.data.feature_store import _FieldStatus
-from torch_geometric.data.graph_store import EdgeLayout
+from torch_geometric.data            setattr(self, key, value)
+
+    def __getattr__(self, key: str) -> Any:
+        if '_store' not in self.__dict__:
+            raise RuntimeError(
+                "The 'data' object was created by an older version of PyG. "
+                "If this error occurred while loading an already existing "
+                "dataset, remove the 'processed/' directory in the dataset's "
+                "root folder and try again.")
+        return getattr(self._store, key)
+
+    def __setattr__(self, key: str, value: Any):
+        propobj = getattr(self.__class__, key, None)
+        if propobj is not None and getattr(propobj, 'fset', None) is not None:
+            propobj.fset(self, value)
+        else:
+            setattr(self._store, key, value)
+
+    def __delattr__(self, key: str):
+        delattr(self._store, key)EdgeLayout
 from torch_geometric.data.storage import (
     BaseStorage,
     EdgeStorage,

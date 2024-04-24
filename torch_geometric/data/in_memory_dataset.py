@@ -1,7 +1,14 @@
 import copy
 import os.path as osp
 import warnings
-from abc import ABC
+fro            :class:`~torch_geometric.data.HeteroData` object and returns a
+            boolean value, indicating whether the data object should be
+            included in the final dataset. (default: :obj:`None`)
+        log (bool, optional): Whether to print any console output while
+            downloading and processing the dataset. (default: :obj:`True`)
+        force_reload (bool, optional): Whether to re-process the dataset.
+            (default: :obj:`False`)
+    """port ABC
 from collections.abc import Mapping, Sequence
 from typing import (
     Any,

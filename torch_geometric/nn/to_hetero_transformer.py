@@ -7,7 +7,25 @@ import torch
 from torch.nn import Module
 
 from torch_geometric.nn.dense.linear import is_uninitialized_parameter
-from torch_geometric.nn.fx import Transformer, get_submodule
+from torch_geometric.nn.fx        queue = deque(
+            [f'{node.name}__{key2str(key)}' for key in self.metadata[0]])
+        i = 1
+        while len(queue) >= 2:
+            key1, key2 = queue.popleft(), queue.popleft()
+            args = (self.find_by_name(key1), self.find_by_name(key2))
+            out = self.graph.create_node('call_function',
+                                         target=self.aggrs[self.aggr],
+                                         args=args, name=f'{name}_{i}')
+            self.graph.inserting_after(out)
+            queue.append(f'{name}_{i}')
+            i += 1
+
+        if self.aggr == 'mean':
+            key = queue.popleft()
+            out = self.graph.create_node(
+                'call_function', target=torch.div,
+                args=(self.find_by_name(key), len(self.metadata[0])),
+                name=f'{name}_{i}'), get_submodule
 from torch_geometric.typing import EdgeType, Metadata, NodeType
 from torch_geometric.utils.hetero import (
     check_add_self_loops,

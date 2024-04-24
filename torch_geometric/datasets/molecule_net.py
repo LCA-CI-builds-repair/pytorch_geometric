@@ -1,7 +1,29 @@
 import os
-import os.path as osp
-import re
-from typing import Callable, Optional
+import os.p        root (str): Root directory where the dataset should be saved.
+        name (str): The name of the dataset (:obj:`"ESOL"`, :obj:`"FreeSolv"`,
+            :obj:`"Lipo"`, :obj:`"PCBA"`, :obj:`"MUV"`, :obj:`"HIV"`,
+            :obj:`"BACE"`, :obj:`"BBBP"`, :obj:`"Tox21"`, :obj:`"ToxCast"`,
+            :obj:`"SIDER"`, :obj:`"ClinTox"`).
+        transform (callable, optional): A function/transform that takes in an
+            :obj:`torch_geometric.data.Data` object and returns a transformed
+            version. The data object will be transformed before every access.
+            (default: :obj:`None`)
+        pre_transform (callable, optional): A function/transform that takes in
+            an :obj:`torch_geometric.data.Data` object and returns a
+            transformed version. The data object will be transformed before
+            being saved to disk. (default: :obj:`None`)
+        pre_filter (callable, optional): A function that takes in an
+            :obj:`torch_geometric.data.Data` object and returns a boolean
+            value, indicating whether the data object should be included in the
+            final dataset. (default: :obj:`None`)
+        force_reload (bool, optional): Whether to re-process the dataset.
+            (default: :obj:`False`)
+
+    **STATS:**
+
+    .. list-table::
+        :widths: 20 10 10 10 10 10
+        :header-rows: 1 typing import Callable, Optional
 
 import torch
 

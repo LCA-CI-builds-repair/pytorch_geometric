@@ -9,7 +9,20 @@ from torch_geometric.nn.conv import MessagePassing
 from torch_geometric.nn.dense.linear import Linear
 from torch_geometric.nn.inits import glorot, ones, zeros
 from torch_geometric.typing import Adj, OptTensor, Size, SparseTensor
-from torch_geometric.utils import is_torch_sparse_tensor, scatter, softmax
+from torch_geometric.utils impo        kj = torch.matmul(outj, self.k)
+
+        alpha_edge, alpha = 0, torch.tensor([0])
+        if edge_attr is not None:
+            if edge_attr.dim() == 1:
+                edge_attr = edge_attr.view(-1, 1)
+            assert self.lin_edge is not None, (
+                "Please set 'edge_dim = edge_attr.size(-1)' while calling the "
+                "RGATConv layer")
+            edge_attributes = self.lin_edge(edge_attr).view(
+                -1, self.heads * self.out_channels)
+            if edge_attributes.size(0) != edge_attr.size(0):
+                edge_attributes = torch.index_select(edge_attributes, 0,
+                                                     edge_type)arse_tensor, scatter, softmax
 from torch_geometric.utils.sparse import set_sparse_value
 
 

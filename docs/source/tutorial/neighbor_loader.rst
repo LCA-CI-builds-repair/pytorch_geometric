@@ -1,7 +1,26 @@
 Scaling GNNs via Neighbor Sampling
 ==================================
 
-One of the challenges of Graph Neural Networks is to scale them to large graphs, *e.g.*, in industrial and social applications.
+One of the challenges of Graph Neural Netwo
+    batch.n_id[batch.edge_index]
+    >>> tensor([[2, 3, 5, 6],
+                [0, 0, 2, 3]])
+
+Furthermore, while :class:`~torch_geometric.loader.NeighborLoader` starts sampling *from* seed nodes, the resulting subgraph will hold edges that point *to* the seed nodes.
+This aligns well with the default :pyg:`PyG` message passing flow from source to destination nodes.
+
+Lastly, nodes in the output of :class:`~torch_geometric.loader.NeighborLoader` are guaranteed to be sorted.
+In particular, the first :obj:`batch_size` sampled nodes will exactly match with the seed nodes that were used for sampling:
+
+.. code-block:: python
+
+    batch.n_id[:batch.batch_size]
+    >>> tensor([0])
+
+Afterwards, we can use :class:`~torch_geometric.loader.NeighborLoader` as a data loading routine to train GNNs on large-scale graphs in mini-batch fashion.
+For this, let's create a simple two-layer :class:`~torch_geometric.nn.models.GraphSAGE` model:
+
+.. code-block:: python to large graphs, *e.g.*, in industrial and social applications.
 Traditional deep neural networks are known to scale well to large amounts of data by decomposing the training loss into individual samples (called a *mini-batch*) and approximating exact gradients stochastically.
 In contrast, applying stochastic mini-batch training in GNNs is challenging since the embedding of a given node depends recursively on all its neighbor’s embeddings, leading to high inter-dependency between nodes that grows exponentially with respect to the number of layers.
 This phenomenon is often referred to as *neighbor explosion*.

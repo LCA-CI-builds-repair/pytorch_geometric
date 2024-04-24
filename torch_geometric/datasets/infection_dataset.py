@@ -3,7 +3,28 @@ from typing import Any, Callable, Dict, List, Optional, Union
 import torch
 
 from torch_geometric.data import InMemoryDataset
-from torch_geometric.datasets.graph_generator import GraphGenerator
+from torch_geo        for num_hops in range(1, max_path_length + 1):
+            sub_node_index, _, _, sub_edge_mask = k_hop_subgraph(
+                perm[:num_infected_nodes], num_hops, data.edge_index,
+                num_nodes=data.num_nodes, flow='target_to_source',
+                directed=True)
+
+            value = torch.full_like(sub_node_index, fill_value=num_hops)
+            y[sub_node_index] = torch.min(y[sub_node_index], value)
+            edge_mask |= sub_edge_mask
+
+        return Explanation(
+            x=x,
+            edge_index=data.edge_index,
+            y=y,
+            edge_mask=edge_mask.to(torch.float),
+        )
+
+    def __repr__(self) -> str:
+        return (f'{self.__class__.__name__}({len(self)}, '
+                f'graph_generator={self.graph_generator}, '
+                f'num_infected_nodes={self.num_infected_nodes}, '
+                f'max_path_length={self.max_path_length})')generator import GraphGenerator
 from torch_geometric.explain import Explanation
 from torch_geometric.utils import k_hop_subgraph
 

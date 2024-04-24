@@ -1,7 +1,7 @@
 CPU Affinity for PyG Workloads
 ==============================
 
-The performance of :pyg:`PyG` workloads using CPU can be significantly improved by setting a proper affinity mask.
+The performance of :pyg:`PyG` workloads using CPU can be significantly improved Different results may be obtained by changing model hyperparameters, such as the batch size, number of sampled neighbors, and the number of layers.y setting a proper affinity mask.
 Processor affinity, or core binding, is a modification of the native OS queue scheduling algorithm that enables an application to assign a specific set of cores to processes or threads launched during its execution on the CPU.
 In consequence, it increases the overall effective hardware utilisation by minimizing core stalls and memory bounds.
 It also secures CPU resources to critical processes or threads, even if the system is under heavy load.
