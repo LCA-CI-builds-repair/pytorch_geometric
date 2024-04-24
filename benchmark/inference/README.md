@@ -1,6 +1,31 @@
-# Inference Benchmark
+### Environment setup
 
-## Environment setup
+1. Ensure PyG is correctly installed.
+2. Install the dataset package:
+   ```bash
+   pip install ogb
+   ```
+3. To enhance performance benchmarking, install `jemalloc`:
+   ```bash
+   cd ${workspace}
+   git clone https://github.com/jemalloc/jemalloc.git
+   cd jemalloc
+   git checkout 5.2.1
+   ./autogen.sh
+   ./configure --prefix=${workspace}/jemalloc-bin
+   make
+   make install
+   ```
+
+## Running benchmark
+
+1. Configure the environment variables for the benchmark:
+   ```bash
+   source activate env_name
+   export DNNL_PRIMITIVE_CACHE_CAPACITY=1024
+   export KMP_BLOCKTIME=1
+   export KMP_AFFINITY=granularity=fine,compact,1,0
+   ```ironment setup
 
 1. Confirm that PyG is properly installed.
 2. Install dataset package:

@@ -9,7 +9,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Added support for edge-level temporal sampling in `NeighborLoader` and `LinkNeighborLoader` ([#8372] (https://github.com/pyg-team/pytorch_geometric/pull/8372))
 - Added support for `torch.compile` in `ModuleDict` and `ParameterDict` ([#8363](https://github.com/pyg-team/pytorch_geometric/pull/8363))
-- Added `force_reload` option to `Dataset` and `InMemoryDataset` to reload datasets ([#8352](https://github.com/pyg-team/pytorch_geometric/pull/8352), [#8357](https://github.com/pyg-team/pytorch_geometric/pull/8357))
+- Added `force_reload` option to `Dataset` and `InMemoryDataset` to reload datasets ([#8352](https://github.com/pyg-team/pytorch_geometric/pu### Fixes and Improvements:
+
+- Fixed a bug in `HANConv` propagating destination node features instead of source node features ([#4753](https://github.com/pyg-team/pytorch_geometric/pull/4753))
+
+- Fixed versions of `checkout` and `setup-python` in CI to enhance stability ([#4751](https://github.com/pyg-team/pytorch_geometric/pull/4751))
+
+- Corrected the `protobuf` version to ensure compatibility ([#4719](https://github.com/pyg-team/pytorch_geometric/pull/4719))
+
+- Resolved the ranking protocol bug in the RGCN link prediction example for accurate results ([#4688](https://github.com/pyg-team/pytorch_geometric/pull/4688))
+
+- Implemented math support in Markdown for improved content presentation ([#4683](https://github.com/pyg-team/pytorch_geometric/pull/4683))
+
+- Updated `Data` to allow for `setter` properties for increased flexibility ([#4682](https://github.com/pyg-team/pytorch_geometric/pull/4682), [#4686](https://github.com/pyg-team/pytorch_geometric/pull/4686))2), [#8357](https://github.com/pyg-team/pytorch_geometric/pull/8357))
 - Added support for `torch.compile` in `MultiAggregation` ([#8345](https://github.com/pyg-team/pytorch_geometric/pull/8345))
 - Added support for `torch.compile` in `HeteroConv` ([#8344](https://github.com/pyg-team/pytorch_geometric/pull/8344))
 - Added support for weighted `sparse_cross_entropy` ([#8340](https://github.com/pyg-team/pytorch_geometric/pull/8340))

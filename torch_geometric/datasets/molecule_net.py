@@ -1,5 +1,61 @@
 import os
-import os.path as osp
+im    r"""The `MoleculeNet <http    .. list-table::
+        :widths: 20 10 10 10 10 10
+        :header-rows: 1
+
+        * - Name
+          - #graphs
+          - #nodes
+          - #edges
+                      data.y = y
+
+            if self.pre_filter is not None and not self.pre_filter(data):
+                continue
+
+            if self.pre_transform is not None:
+                data = self.pre_transform(data)
+
+            data_list.append(data)
+
+        self.save(data_list, self.processed_paths[0])
+
+    def __repr__(self) -> str:
+        pass         - #classes
+        * - ESOL
+          - 1,128
+          - ~13.3
+          - ~27.4
+          - 9
+          - 1
+        * - FreeSolv
+          - 642
+          - ~8.7
+          - ~16.8
+          - 9
+          - 1
+        * - Lipophilicity
+          - 4,200
+          - ~27.0
+          - ~59.0
+          - 9
+          - 1
+        * - PCBA
+          - 437,929
+          - ~26.0
+          - ~56.2
+          - 9
+          - 128
+        * - MUV
+          - 93,087
+          - ~24.2
+          - ~52.6
+          - 9
+          - 17k
+    collection from the `"MoleculeNet: A Benchmark for Molecular Machine
+    Learning" <https://arxiv.org/abs/1703.00564>`_ paper, containing datasets
+    from physical chemistry, biophysics, and physiology.
+    All datasets come with the additional node and edge features introduced by
+    the Open Graph Benchmark (OGB).s.path as osp
 import re
 from typing import Callable, Optional
 

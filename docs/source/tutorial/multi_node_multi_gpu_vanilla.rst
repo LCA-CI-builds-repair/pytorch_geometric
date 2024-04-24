@@ -1,4 +1,12 @@
-Multi-Node Training using SLURM
+Multi-Node T~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As we are now running on multiple nodes, the :obj:`__main__` entrypoint cannot be used to start processes.
+To address this, we utilize a workload manager to create a special :obj:`*.sbatch` file.
+The `*.sbatch` file is a bash script containing instructions for setting up processes and the environment.
+
+The script typically begins with the shebang :obj:`#!/bin/bash` and includes comments specifying the resources to be reserved by the SLURM system for the training run.
+Configuration details may vary based on the site and usage limits.
+Below is a minimal example that functions with a relatively unrestricted configuration:sing SLURM
 ===============================
 
 This tutorial introduces a skeleton on how to perform distributed training on multiple GPUs over multiple nodes using the `SLURM workload manager <https://slurm.schedmd.com/>`_ available at many supercomputing centers.

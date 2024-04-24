@@ -1,7 +1,25 @@
 import inspect
-import os
-import platform
-import sys
+import os    import pyg_lib  # noqa
+    WITH_PYG_LIB = True
+    WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
+    WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
+
+    # Check for issues with `segment_matmul` on older NVIDIA cards during GPU tests
+    if WITH_SEGMM and 'pytest' in sys.modules and torch.cuda.is_available():
+        # NOTE: `segment_matmul` is currently bugged on older NVIDIA cards causing GPU tests to crash.
+        # Try to execute `segment_matmul` and disable `WITH_SEGMM`/`WITH_GMM` if necessary.
+        # TODO: Remove this code block once `segment_matmul` is fixed.
+        try:
+            x = torch.randn(3, 4, device='cuda')
+            ptr = torch.tensor([0, 2, 3], device='cuda')
+            weight = torch.randn(2, 4, 4, device='cuda')
+            out = pyg_lib.ops.segment_matmul(x, ptr, weight)
+        except RuntimeError:
+            WITH_GMM = False
+            WITH_SEGMM = False
+
+    WITH_SAMPLED_OP = hasattr(pyg_lib.ops, 'sampled_add')
+    WITH_INDEX_SORT = hasattr(pyg_lib.ops, 'index_sort')port sys
 import warnings
 from typing import Dict, List, Optional, Tuple, Union
 

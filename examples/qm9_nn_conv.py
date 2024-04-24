@@ -3,9 +3,43 @@ import os.path as osp
 
 import torch
 import torch.nn.functional as F
-from torch.nn import GRU, Linear, ReLU, Sequential
+from torch.nn import GRU, L    model.train()
+    loss_all = 0
 
-import torch_geometric.transforms as T
+    # Training function to calculate loss
+    for data in train_loader:
+        data = data.to(device)
+        optimizer.zero_grad()
+        loss = F.mse_loss(model(data), data.y)
+        loss.backward()
+        loss_all += loss.item() * data.num_graphs
+        optimizer.step()
+    return loss_all / len(train_loader.dataset)
+
+
+def test(loader):
+    model.eval()
+    error = 0
+
+    # Testing function to calculate error
+    for data in loader:
+        data = data.to(device)
+        # Calculate Mean Absolute Error (MAE)
+        error += (model(data) * std - data.y * std).abs().sum().item()
+    return error / len(loader.dataset)
+
+
+best_val_error = None
+for epoch in range(1, 301):
+    lr = scheduler.optimizer.param_groups[0]['lr']
+    loss = train(epoch)
+    val_error = test(val_loader)
+    scheduler.step(val_error)
+
+    # Update best validation error
+    if best_val_error is None or val_error <= best_val_error:
+        test_error = test(test_loader)
+        best_val_error = val_errororch_geometric.transforms as T
 from torch_geometric.datasets import QM9
 from torch_geometric.loader import DataLoader
 from torch_geometric.nn import NNConv, Set2Set

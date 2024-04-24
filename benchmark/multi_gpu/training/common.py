@@ -5,8 +5,33 @@ from typing import Any, Callable, Tuple, Union
 
 import torch
 import torch.distributed as dist
-import torch.nn.functional as F
-from torch.nn.parallel import DistributedDataParallel as DDP
+import torc        'inputs_channels': inputs_channels,
+        'hidden_channels': args.num_hidden_channels,
+        'output_channels': num_classes,
+        'num_heads': args.num_heads,
+        'num_layers': args.num_layers,
+    }
+
+    if args.model == 'pna' and degree is None:
+        degree = PNAConv.get_degree_histogram(subgraph_loader)
+        print(f'Rank: {rank}, calculated degree for {args.dataset}.',
+              flush=True)
+        params['degree'] = degree
+    dist.barrier()
+
+    torch.manual_seed(12345)
+    model = get_model(args.model, params,
+                      metadata=data.metadata() if hetero else None)
+    model = model.to(device)
+    if hetero:
+        # TODO (DamianSzwichtenberg):
+        # Provide fix for:
+        # RuntimeError: Modules with uninitialized parameters can't be used
+        # with `DistributedDataParallel`. Run a dummy forward pass to correctly
+        # initialize the modules.
+        pass
+    model = DDP(model, device_ids=[device])
+    model.train()orch.nn.parallel import DistributedDataParallel as DDP
 
 from benchmark.utils import get_model, get_split_masks, test
 from torch_geometric.data import Data, HeteroData

@@ -5,7 +5,22 @@ import sys
 import warnings
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, L    def raw_paths(self) -> List[str]:
+        r"""Returns the absolute filepaths required to skip downloading."""
+        files = self.raw_file_names
+        # Check if `raw_file_names` is a property to avoid potential errors.
+        if isinstance(files, Callable):
+            files = files()
+        return [osp.join(self.raw_dir, f) for f in to_list(files)]
+
+    @property
+    def processed_paths(self) -> List[str]:
+        r"""Returns the absolute filepaths needed to skip processing."""
+        files = self.processed_file_names
+        # Check if `processed_file_names` is a property to prevent errors.
+        if isinstance(files, Callable):
+            files = files()
+        return [osp.join(self.processed_dir, f) for f in to_list(files)]Union
 
 import numpy as np
 import torch.utils.data
