@@ -3,7 +3,35 @@ import os
 import os.path as osp
 from typing import Callable, List, Optional
 
-import torch
+import tor                               def process_data(paths, raw_paths):
+            data_list = []
+            for path in paths:
+                data = read_off(f'{path}.off')
+                y = read_txt_array(f'{path}.baryc_gt')
+                data.y = y[:, 0].to(torch.long) - 1
+                data.y_baryc = y[:, 1:]
+                data_list.append(data)
+            return data_list
+
+        train_list = process_data(glob.glob(osp.join(self.raw_paths[0], self.part, f'{self.part}_{self.cat}_*.off')), self.raw_paths[0])
+        test_list = process_data(glob.glob(osp.join(self.raw_paths[1], self.part, f'{self.part}_{self.cat}_*.off')), self.raw_paths[1])
+
+        if self.pre_filter is not None:
+            train_list = [d for d in train_list if self.pre_filter(d)]
+            test_list = [d for d in test_list if self.pre_filter(d)]
+
+        if self.pre_transform is not None:
+            ref_data = self.pre_transform(ref_data)
+            train_list = [self.pre_transform(d) for d in train_list]
+            test_list = [self.pre_transform(d) for d in test_list]
+
+        torch.save(ref_data, self.processed_paths[0])
+        self.save(train_list, self.processed_paths[1])
+        self.save(test_list, self.processed_paths[2])    osp.join(self.raw_paths[0], f'{self.cat}.off')) os.path.exists(path):
+            extract_zip(path, self.raw_dir)
+            os.unlink(path)th = download_url(self.train_url, self.raw_dir)
+        if path:
+            extract_zip(path, self.raw_dir)   return [f'{name}_{i}' for i in ['ref', 'training', 'test']]h
 
 from torch_geometric.data import InMemoryDataset, download_url, extract_zip
 from torch_geometric.io import read_off, read_txt_array

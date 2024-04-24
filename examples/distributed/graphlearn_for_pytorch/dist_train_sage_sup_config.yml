@@ -1,5 +1,7 @@
 # IP addresses for all nodes.
-# Note: The first 3 params are expected to form usernames@nodes:ports.
+dst_paths:
+  - /path/to/pytorch_geometric_1
+  - /path/to/pytorch_geometric_2ote: The first 3 params are expected to form usernames@nodes:ports.
 nodes:
   - 0.0.0.0
   - 1.1.1.1

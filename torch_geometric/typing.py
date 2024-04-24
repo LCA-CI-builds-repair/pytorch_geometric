@@ -1,6 +1,6 @@
 import inspect
 import os
-import platform
+import        # current GPU and disable `WITH_SEGMM`/`WITH_GMM` functionality if necessary.platform
 import sys
 import warnings
 from typing import Dict, List, Optional, Tuple, Union

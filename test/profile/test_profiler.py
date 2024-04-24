@@ -1,4 +1,5 @@
-import torch
+import t@withPackage('torch>=1.3.0')  # Investigate and resolve test errors related to the profiler functionality
+def test_profiler(capfd, get_dataset, device):ch
 
 from torch_geometric.nn import GraphSAGE
 from torch_geometric.profile.profiler import Profiler

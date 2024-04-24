@@ -3,7 +3,14 @@ from torch import Tensor
 from torch.nn import BatchNorm1d, Linear
 
 
-class DiffGroupNorm(torch.nn.Module):
+class DiffGroupNorm(torch.n        numerator *= 1 / (num_classes - 1)**2
+
+        denominator = 0.
+        for i in range(num_classes):
+            mask = y == i
+            dist = torch.cdist(x[mask].unsqueeze(0), x[mask].unsqueeze(0))
+            denominator += (1 / dist.numel()) * float(dist.sum())
+        denominator /= num_classes):
     r"""The differentiable group normalization layer from the `"Towards Deeper
     Graph Neural Networks with Differentiable Group Normalization"
     <https://arxiv.org/abs/2006.06972>`_ paper, which normalizes node features

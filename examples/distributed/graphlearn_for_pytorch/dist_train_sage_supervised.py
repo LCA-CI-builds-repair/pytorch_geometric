@@ -8,7 +8,52 @@ import torch.distributed
 import torch.nn.functional as F
 from ogb.nodeproppred import Evaluator
 from torch import Tensor
-from torch.nn.parallel import DistributedDataParallel
+from torch.nn.parallel import DistributedDataParall# Add code for distributed training using Sage supervised learning
+import torch
+import torch_geometric.transforms as T
+from torch_geometric.nn import SAGEConv
+from torch.nn import Linear
+from torch_geometric.data import Data, DataLoader
+from torch_geometric.datasets import Planetoid
+import torch.distributed as dist
+
+# Define the model
+class SAGEModel(torch.nn.Module):
+    def __init__(self):
+        super(SAGEModel, self).__init__()
+        self.conv1 = SAGEConv(dataset.num_features, 16)
+        self.conv2 = SAGEConv(16, dataset.num_classes)
+
+    def forward(self, x, edge_index):
+        x = self.conv1(x, edge_index)
+        x = torch.relu(x)
+        x = self.conv2(x, edge_index)
+        return torch.log_softmax(x, dim=-1)
+
+def train():
+    model.train()
+    optimizer.zero_grad()
+    out = model(data.x, data.edge_index)
+    loss = criterion(out[data.train_mask], data.y[data.train_mask])
+    loss.backward()
+    optimizer.step()
+
+# Initialize distributed training
+dist.init_process_group(backend='nccl', init_method='env://')
+
+# Setup the dataset and model
+dataset = Planetoid(root='/tmp/Cora', name='Cora', transform=T.NormalizeFeatures())
+data = dataset[0]
+model = SAGEModel()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+criterion = torch.nn.NLLLoss()
+
+# Train the model
+for epoch in range(200):
+    train()
+
+# Clean up
+dist.destroy_process_group()l
 
 from torch_geometric.nn import GraphSAGE
 

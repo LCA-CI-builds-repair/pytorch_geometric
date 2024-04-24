@@ -23,12 +23,107 @@ from torch_geometric.testing import (
 )
 from torch_geometric.typing import (
     WITH_EDGE_TIME_NEIGHBOR_SAMPLE,
-    WITH_PYG_LIB,
-    WITH_TORCH_SPARSE,
-    WITH_WEIGHTED_NEIGHBOR_SAMPLE,
-    TensorFrame,
-)
-from torch_geometric.utils import (
+    WITH_PYG_    out = []
+    with loader.enable_cpu_affinity(loader_cores):
+        iterator = loader._get_iterator()
+        workers = iterator._workers
+        for worker in workers:
+            sleep(1)  # Gives time for worker to initialize.
+            process = subprocess.Popen(
+                ['taskset', '-c', '-p', f'{worker.pid}'],
+                stdout=subprocess.PIPE)
+            stdout = process.communicate()[0].decode('utf-8')
+            out.append(int(stdout.split(':')[1].strip()))
+        if not loader_cores:
+            assert out == [0]
+        else:
+            assert out == loader_cores
+
+
+@withPackage('pyg_lib')
+def test_homo_neighbor_loader_sampled_info():
+    edge_index = torch.tensor([
+        [2, 3, 4, 5, 7, 7, 10, 11, 12, 13],
+        [0, 1, 2, 3, 2, 3, 7, 7, 7, 7],
+    ])
+
+    data = Data(edge_index=edge_index, num_nodes=14)
+
+    loader = NeighborLoader(
+        data,
+        num_neighbors=[1, 2, 4],
+        batch_size=2,
+        shuffle=False,
+    )
+    batch = next(iter(loader))
+
+    assert batch.num_sampled_nodes == [2, 2, 3, 4]
+    assert batch.num_sampled_edges == [2, 4, 4]
+
+
+@withPackage('pyg_lib')
+def test_hetero_neighbor_loader_sampled_info():
+    edge_index = torch.tensor([
+        [2, 3, 4, 5, 7, 7, 10, 11, 12, 13],
+        [0, 1, 2, 3, 2, 3, 7, 7, 7, 7],
+    ])
+
+    data = HeteroData()
+    data['paper'].num_nodes = data['author'].num_nodes = 14
+    data['paper', 'paper'].edge_index = edge_index
+    data['paper', 'author'].edge_index = edge_index
+    data['author', 'paper'].edge_index = edge_index
+
+    loader = NeighborLoader(
+        data,
+        num_neighbors=[1, 2, 4],
+        batch_size=2,
+        input_nodes='paper',
+        shuffle=False,
+    )
+    batch = next(iter(loader))
+
+    expected_num_sampled_nodes = {
+        'paper': [2, 2, 3, 4],
+        'author': [0, 2, 3, 4],
+    }
+    expected_num_sampled_edges = {
+        ('paper', 'to', 'paper'): [2, 4, 4],
+        ('paper', 'to', 'author'): [0, 4, 4],
+        ('author', 'to', 'paper'): [2, 4, 4],
+    }
+
+    for node_type in batch.node_types:
+        assert (batch[node_type].num_sampled_nodes ==
+                expected_num_sampled_nodes[node_type])
+    for edge_type in batch.edge_types:
+        assert (batch[edge_type].num_sampled_edges ==
+                expected_num_sampled_edges[edge_type])
+
+
+@withPackage('pyg_lib')
+def test_neighbor_loader_mapping():
+    edge_index = torch.tensor([
+        [0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 5],
+        [1, 2, 3, 4, 5, 8, 6, 7, 9, 10, 6, 11],
+    ])
+    data = Data(edge_index=edge_index, num_nodes=12)
+
+    loader = NeighborLoader(
+        data,
+        num_neighbors=[1],
+        batch_size=2,
+        shuffle=True,
+    )
+
+    for batch in loader:
+        assert torch.equal(
+            batch.n_id[batch.edge_index],
+            data.edge_index[:, batch.e_id],
+        )
+
+
+@pytest.mark.skipif(.utils import (
     is_undirected,
     sort_edge_index,
     to_torch_csr_tensor,

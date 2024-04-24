@@ -1,4 +1,4 @@
-from setuptools import find_packages, setup
+f# Add setup configurations and dependencies for setting up the benchmarkom setuptools import find_packages, setup
 
 setup(
     name='torch_geometric_benchmark',
