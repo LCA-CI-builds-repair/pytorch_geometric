@@ -1,7 +1,8 @@
 import functools
 import os.path as osp
 import shutil
-from typing import Callable
+from tyimport torch_geometric
+'WITH_TORCH_SCATTER': torch_geometric.typing.WITH_TORCH_SCATTER,ing import Callable
 
 import pytest
 

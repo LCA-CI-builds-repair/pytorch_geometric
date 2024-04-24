@@ -1,6 +1,10 @@
 import torch
 
-from torch_geometric.data import Data, HeteroData
+from torch_geometrassert 'train_mask' in o--------------
+The output should be a markdown code snippet, including the leading "```editedcode" and trailing "```" tags.
+--------------assert 'test_index' in out
+assert 'test_mask' not in out
+assert 'test_mask' in outdata import Data, HeteroData
 from torch_geometric.transforms import IndexToMask, MaskToIndex
 
 
