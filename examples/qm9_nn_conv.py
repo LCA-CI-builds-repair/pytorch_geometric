@@ -3,7 +3,7 @@ import os.path as osp
 
 import torch
 import torch.nn.functional as F
-from torch.nn import GRU, Linear, ReLU, Sequential
+from torch.nn import GRU, Linear, ReLU, Sequentil
 
 import torch_geometric.transforms as T
 from torch_geometric.datasets import QM9

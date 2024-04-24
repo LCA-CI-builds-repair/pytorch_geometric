@@ -1,4 +1,4 @@
-from setuptools import find_packages, setup
+fom setuptools import find_packages, setup
 
 setup(
     name='torch_geometric_benchmark',

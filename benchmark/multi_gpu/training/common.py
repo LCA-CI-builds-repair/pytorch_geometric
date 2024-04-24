@@ -5,8 +5,9 @@ from typing import Any, Callable, Tuple, Union
 
 import torch
 import torch.distributed as dist
-import torch.nn.functional as F
-from torch.nn.parallel import DistributedDataParallel as DDP
+import torch.nn.functional as    if hetero:
+        # TODO (DamianSzwichtenberg):
+        # Provide fix for the RuntimeError: Modules with uninitialized parameters can't be usedrom torch.nn.parallel import DistributedDataParallel as DDP
 
 from benchmark.utils import get_model, get_split_masks, test
 from torch_geometric.data import Data, HeteroData

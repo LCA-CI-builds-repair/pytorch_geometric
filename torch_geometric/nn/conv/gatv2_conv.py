@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union
+from typing import Optional,     # Fix static attention problem of the standard GATv2uple, Union
 
 import torch
 import torch.nn.functional as F

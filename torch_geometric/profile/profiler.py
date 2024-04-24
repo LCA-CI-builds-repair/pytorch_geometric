@@ -3,7 +3,8 @@ from collections import OrderedDict, defaultdict, namedtuple
 from typing import Any, List, NamedTuple, Optional, Tuple
 
 import torch
-import torch.profiler as torch_profiler
+import torch.profiler as to[path, leaf, module] = trace
+current_tree = treeh_profiler
 
 # predefined namedtuple for variable setting (global template)
 Trace = namedtuple('Trace', ['path', 'leaf', 'module'])

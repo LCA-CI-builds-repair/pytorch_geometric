@@ -6,7 +6,9 @@ import pytest
 import torch
 
 from torch_geometric import seed_everything
-from torch_geometric.graphgym import register
+from torch_g    batch = next(iter(loaders[2]))
+    batch = batch.to(model.device)
+    outputs = model.test_step(batch)etric.graphgym import register
 from torch_geometric.graphgym.checkpoint import get_ckpt_dir
 from torch_geometric.graphgym.config import (
     cfg,

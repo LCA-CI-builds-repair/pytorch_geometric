@@ -1,7 +1,8 @@
 import math
 
 from torch_geometric.graphgym.config import cfg, set_cfg
-from torch_geometric.graphgym.model_builder import create_model
+fr        cfg_dict (dict): Dictionary containing the current experiment's configuration
+        cfg_dict_baseline (dict): Dictionary containing the baseline configuration torch_geometric.graphgym.model_builder import create_model
 
 
 def params_count(model):
