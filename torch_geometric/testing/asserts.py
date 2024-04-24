@@ -1,6 +1,21 @@
 import copy
 import warnings
-from typing import Any, List, Optional, Tuple, Union
+frodef assert_module_output_shape(module, data):
+    # Assertion 1: The module output has the correct shape.
+    output = module(data)
+    assert output.shape == data.y.shape, "Module output shape mismatch"
+
+def assert_module_edge_permutation_invariance(module, data):
+    # Assertion 2: The module is invariant to the permutation of edges.
+    # Implement edge permutation test here.
+
+def assert_module_node_permutation_invariance(module, data):
+    # Assertion 3: The module is invariant to the permutation of nodes.
+    # Implement node permutation test here.
+
+def assert_module_edge_index_layout_invariance(module, data):
+    # Assertion 4: The module is invariant to the layout of :obj:`edge_index`.
+    # Implement edge_index layout test here.ing import Any, List, Optional, Tuple, Union
 
 import torch
 from torch import Tensor

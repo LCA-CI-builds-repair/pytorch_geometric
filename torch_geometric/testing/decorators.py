@@ -2,8 +2,53 @@ import os
 import sys
 import warnings
 from importlib import import_module
-from importlib.util import find_spec
-from typing import Callable
+frofrom typing import Callable
+
+import pytest
+
+def has_graphviz() -> bool:
+    # Add logic to check if Graphviz is installed
+    return True  # Placeholder return value, actual implementation needed
+
+def onlyOnline(func: Callable):
+    r"""A decorator to skip tests if there exists no connection to the
+    internet.
+    """
+    import http.client as httplib
+
+    has_connection = True
+    connection = httplib.HTTPSConnection('8.8.8.8', timeout=5)
+    try:
+        connection.request('HEAD', '/')
+    except Exception:
+        has_connection = False
+    finally:
+        connection.close()
+
+    return pytest.mark.skipif(
+        not has_connection,
+        reason="No internet connection",
+    )(func)
+
+def onlyGraphviz(func: Callable) -> Callable:
+    r"""A decorator to specify that this function should only execute in case
+    :obj:`graphviz` is installed.
+    """
+    import pytest
+    return pytest.mark.skipif(
+        not has_graphviz(),
+        reason="Graphviz not installed",
+    )(func)
+
+def onlyNeighborSampler(func: Callable):
+    r"""A decorator to skip tests if no neighborhood sampler package is
+    installed.
+    """
+    import pytest
+    return pytest.mark.skipif(
+        not WITH_PYG_LIB and not WITH_TORCH_SPARSE,
+        reason="No neighbor sampler installed",
+    )(func)able
 
 import torch
 from packaging.requirements import Requirement

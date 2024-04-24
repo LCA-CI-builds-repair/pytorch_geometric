@@ -1,4 +1,23 @@
-from itertools import product
+ffrom typing import Callable, List, Optional
+
+import torch
+from torch_geometric.transforms import FaceToEdge, SamplePoints
+from torch_geometric.data import Data, InMemoryDataset
+
+class DynamicFAUST(InMemoryDataset):
+    r"""The dynamic FAUST humans dataset from the `"Dynamic FAUST: Registering
+    Human Bodies in Motion"
+    <http://files.is.tue.mpg.de/black/papers/dfaust2017.pdf>`_ paper.
+
+    .. note::
+
+        Data objects hold mesh faces instead of edge indices.
+        To convert the mesh to a graph, use the
+        :obj:`torch_geometric.transforms.FaceToEdge` as :obj:`pre_transform`
+        and :obj:`torch_geometric.transforms.SamplePoints` as :obj:`transform`.
+        The `FaceToEdge` transform converts mesh faces to edge indices, and 
+        `SamplePoints` samples a fixed number of points on the mesh faces according to their
+        ... product
 from typing import Callable, List, Optional
 
 import torch

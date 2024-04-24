@@ -1,7 +1,41 @@
+iimport torch
 import pytest
-import torch
-
+import torch_geometric
 from torch_geometric.data import Data
+from torch_geometric.loader import ClusterData, ClusterLoader
+from torch_geometric.testing import onlyFullTest, onlyOnline
+from torch_geometric.utils import sort_edge_index
+
+try:
+    # TODO Using `pyg-lib` metis partitioning leads to some weird bugs in the
+    # CI. As such, we require `torch-sparse` for these tests for now.
+    rowptr = torch.tensor([0, 1])
+    col = torch.tensor([0])
+    torch.ops.torch_sparse.partition(rowptr, col, None, 1, True)
+    WITH_METIS = True
+except (AttributeError, RuntimeError):
+    WITH_METIS = False
+
+@pytest.mark.skipif(not WITH_METIS, reason='Not compiled with METIS support')
+def test_cluster_gcn():
+    adj = torch.tensor([
+        [1, 1, 1, 0, 1, 0],
+        [1, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0],
+        [0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0],
+        [0, 1, 0, 1, 0, 1],
+    ])
+    
+    # Create a Data object from the adjacency matrix
+    edge_index = torch.stack(torch.where(adj == 1), dim=0)
+    data = Data(edge_index=edge_index)
+
+    # Cluster the data using ClusterData
+    cluster_data = ClusterData(data, num_parts=2)
+    
+    # Test the clustering results
+    assert cluster_data.ptr.size(0) == 3, "Incorrect number of clusters"rom torch_geometric.data import Data
 from torch_geometric.loader import ClusterData, ClusterLoader
 from torch_geometric.testing import onlyFullTest, onlyOnline
 from torch_geometric.utils import sort_edge_index

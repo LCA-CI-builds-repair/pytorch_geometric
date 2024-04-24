@@ -1,7 +1,13 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
+The - Added implementation for `group_argsort` function. [#7948](https://github.com/pyg-team/pytorch_geometric/pull/7948).
+- Implemented `CachedLoader` for efficient data loading. [#7896](https://github.com/pyg-team/pytorch_geometric/pull/7896), [#7897](https://github.com/pyg-team/pytorch_geometric/pull/7897).
+- Introduced the ability to run training benchmarks on XPU device. [#7925](https://github.com/pyg-team/pytorch_geometric/pull/7925).
+- Added `utils.ppr` for personalized PageRank computation. [#7917](https://github.com/pyg-team/pytorch_geometric/pull/7917).
+- Enhanced support for XPU device in `PrefetchLoader`. [#7918](https://github.com/pyg-team/pytorch_geometric/pull/7918).
+- Enabled floating-point slicing in `Dataset`, allowing slicing like `dataset[:0.9]`. [#7915](https://github.com/pyg-team/pytorch_geometric/pull/7915).
+- Implemented nightly GPU tests for continuous integration. [#7895](https://github.com/pyg-team/pytorch_geometric/pull/7895).is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.5.0] - 2023-MM-DD
 
