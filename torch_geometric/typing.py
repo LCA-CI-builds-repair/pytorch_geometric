@@ -22,6 +22,7 @@ if not hasattr(torch, 'sparse_csc'):
     torch.sparse_csc = -1
 
 try:
+    import sys  # Add import statement for sys
     import pyg_lib  # noqa
     WITH_PYG_LIB = True
     WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')

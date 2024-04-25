@@ -1,4 +1,6 @@
 import logging
+import torch.compile  # Add import statement for torch.compile
+
 import warnings
 from typing import Callable, Optional
 
@@ -10,8 +12,6 @@ JIT_WARNING = ("Could not convert the 'model' into a jittable version. "
                "As such, 'torch.compile' may currently fail to correctly "
                "optimize your model. 'MessagePassing.jittable()' reported "
                "the following error: {error}")
-
-
 def to_jittable(model: torch.nn.Module) -> torch.nn.Module:
     if isinstance(model, torch_geometric.nn.MessagePassing):
         try:

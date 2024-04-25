@@ -177,6 +177,9 @@ class Dataset(torch.utils.data.Dataset, ABC):
         return self._infer_num_classes(y)
 
     @property
+    import os.path as osp  # Add import statement for osp
+    from torch_geometric.utils import to_list  # Add import statement for to_list
+
     def raw_paths(self) -> List[str]:
         r"""The absolute filepaths that must be present in order to skip
         downloading.
