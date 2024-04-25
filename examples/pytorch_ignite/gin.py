@@ -125,7 +125,7 @@ def main():
                                     checkpoint_handler)
 
     # Create a tensorboard logger to write logs:
-    tb_logger = ignite.contrib.handlers.tensorboard_logger.TensorboardLogger(
+    tb_logger = ignite.contrib.handlers.tensorboard_logger.tensorboard_logger.TensorboardLogger(
         log_dir=osp.join('runs/example', 'tb_logs'))
 
     tb_logger.attach_output_handler(

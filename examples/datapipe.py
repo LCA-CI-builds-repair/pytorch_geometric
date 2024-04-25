@@ -2,18 +2,7 @@
 # DataPipes (https://pytorch.org/data/) across various tasks:
 
 # (1) molecular graph data loading pipe
-# (2) mesh/point cloud data loading pipe
-
-# In particular, we make use of PyG's built-in DataPipes, e.g., for batching
-# multiple PyG data objects together or for converting SMILES strings into
-# molecular graph representations. We also showcase how to write your own
-# DataPipe (i.e. for loading and parsing mesh data into PyG data objects).
-
-import argparse
-import os.path as osp
-import time
-
-import torch
+No changes are required in the provided code snippet from examples/datapipe.py as it does not seem to be related to the ImportError issue mentioned in the context.
 from torchdata.datapipes.iter import FileLister, FileOpener, IterDataPipe
 
 from torch_geometric.data import Data, download_url, extract_zip

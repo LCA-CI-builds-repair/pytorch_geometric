@@ -6,9 +6,7 @@ import numpy as np
 import torch
 from torch import Tensor
 
-import torch_geometric.typing
 from torch_geometric.typing import Adj
-
 
 class InvertibleFunction(torch.autograd.Function):
     r"""An invertible autograd function. This allows for automatic
