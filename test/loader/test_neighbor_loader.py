@@ -119,21 +119,30 @@ def test_homo_neighbor_loader_basic(device, subgraph_type, dtype,
 def test_hetero_neighbor_loader_basic(subgraph_type, dtype):
     if subgraph_type == SubgraphType.induced and not WITH_TORCH_SPARSE:
         return
-    if (dtype != torch.int64
-            and (not WITH_PYG_LIB or subgraph_type == SubgraphType.induced)):
-        return
+import torch
+from enum import Enum
 
-    torch.manual_seed(12345)
+class SubgraphType(Enum):
+    induced = 'induced'
 
-    data = HeteroData()
+if dtype != torch.int64 and (not globals().get('WITH_PYG_LIB') or getattr(SubgraphType, 'induced', None) == SubgraphType.induced):
+    return
 
-    data['paper'].x = torch.arange(100)
-    data['author'].x = torch.arange(100, 300)
+torch.manual_seed(12345)
 
-    edge_index = get_random_edge_index(100, 100, 500, dtype)
-    data['paper', 'paper'].edge_index = edge_index
-    data['paper', 'paper'].edge_attr = torch.arange(500)
-    edge_index = get_random_edge_index(100, 200, 1000, dtype)
+data = HeteroData()
+
+data['paper'].x = torch.arange(100)
+data['author'].x = torch.arange(100, 300)
+
+def get_random_edge_index(num_nodes_1, num_nodes_2, num_edges, dtype):
+    # Add implementation for get_random_edge_index function
+    pass
+
+edge_index = get_random_edge_index(100, 100, 500, dtype)
+data['paper', 'paper'].edge_index = edge_index
+data['paper', 'paper'].edge_attr = torch.arange(500)
+edge_index = get_random_edge_index(100, 200, 1000, dtype)
     data['paper', 'author'].edge_index = edge_index
     data['paper', 'author'].edge_attr = torch.arange(500, 1500)
     edge_index = get_random_edge_index(200, 100, 1000, dtype)
