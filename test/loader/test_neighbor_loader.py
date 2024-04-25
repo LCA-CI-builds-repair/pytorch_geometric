@@ -454,11 +454,9 @@ def test_custom_neighbor_loader():
                 batch2[node_type].x.sort()[0],
             )
 
-        # ... but should sample the exact same number of edges:
+        # Compare and ensure both batches sample the exact same number of edges:
         for edge_type in data.edge_types:
             assert batch1[edge_type].num_edges == batch2[edge_type].num_edges
-
-
 @onlyOnline
 @withPackage('pyg_lib')
 def test_temporal_custom_neighbor_loader_on_cora(get_dataset):

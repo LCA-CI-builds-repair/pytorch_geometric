@@ -18,14 +18,8 @@ class Taobao(InMemoryDataset):
     <https://tianchi.aliyun.com/dataset/649>`_.
 
     Taobao is a heterogeneous graph for recommendation.
-    Nodes represent users with user IDs, items with item IDs, and categories
-    with category ID.
-    Edges between users and items represent different types of user behaviors
-    towards items (alongside with timestamps).
-    Edges between items and categories assign each item to its set of
-    categories.
-
-    Args:
+### Summary of Changes:
+The code snippet provided does not contain any specific issues that need to be addressed.
         root (str): Root directory where the dataset should be saved.
         transform (callable, optional): A function/transform that takes in an
             :obj:`torch_geometric.data.HeteroData` object and returns a
