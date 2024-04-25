@@ -448,17 +448,17 @@ def test_custom_neighbor_loader():
         assert batch1['paper'].batch_size == batch2['paper'].batch_size
 
         # Mapped indices of neighbors may be differently sorted ...
-        for node_type in data.node_types:
-            assert torch.allclose(
-                batch1[node_type].x.sort()[0],
-                batch2[node_type].x.sort()[0],
-            )
+import torch  # Import necessary module(s)
 
-        # ... but should sample the exact same number of edges:
-        for edge_type in data.edge_types:
-            assert batch1[edge_type].num_edges == batch2[edge_type].num_edges
+for node_type in data.node_types:
+    assert torch.allclose(
+        batch1[node_type].x.sort()[0],
+        batch2[node_type].x.sort()[0],
+    )
 
-
+# Ensure the exact number of edges is sampled for each edge type:
+for edge_type in data.edge_types:
+    assert batch1[edge_type].num_edges == batch2[edge_type].num_edges
 @onlyOnline
 @withPackage('pyg_lib')
 def test_temporal_custom_neighbor_loader_on_cora(get_dataset):

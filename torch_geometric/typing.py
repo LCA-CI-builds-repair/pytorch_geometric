@@ -22,16 +22,14 @@ if not hasattr(torch, 'sparse_csc'):
     torch.sparse_csc = -1
 
 try:
-    import pyg_lib  # noqa
-    WITH_PYG_LIB = True
-    WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
-    WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
-    if WITH_SEGMM and 'pytest' in sys.modules and torch.cuda.is_available():
-        # NOTE `segment_matmul` is currently bugged on older NVIDIA cards which
-        # let our GPU tests on CI crash. Try if this error is present on the
-        # current GPU and disable `WITH_SEGMM`/`WITH_GMM` if necessary.
-        # TODO Drop this code block once `segment_matmul` is fixed.
-        try:
+import pyg_lib  # noqa
+WITH_PYG_LIB = True
+WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
+WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
+if WITH_SEGMM and 'pytest' in sys.modules and torch.cuda.is_available():
+    # Disable `WITH_SEGMM`/`WITH_GMM` if `segment_matmul` is bugged on the current GPU
+    # TODO Drop this code block once `segment_matmul` is fixed.
+    try:
             x = torch.randn(3, 4, device='cuda')
             ptr = torch.tensor([0, 2, 3], device='cuda')
             weight = torch.randn(2, 4, 4, device='cuda')

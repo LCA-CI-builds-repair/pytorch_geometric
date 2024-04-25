@@ -119,14 +119,13 @@ def train(epoch):
 
 
 def test(loader):
-    model.eval()
-    error = 0
+model.eval()
+error = 0
 
-    for data in loader:
-        data = data.to(device)
-        error += (model(data) * std - data.y * std).abs().sum().item()  # MAE
-    return error / len(loader.dataset)
-
+for data in loader:
+    data = data.to(device)
+    error += (model(data) * std - data.y * std).abs().sum().item()  # MAE
+return error / len(loader.dataset)
 
 best_val_error = None
 for epoch in range(1, 301):
@@ -135,7 +134,7 @@ for epoch in range(1, 301):
     val_error = test(val_loader)
     scheduler.step(val_error)
 
-    if best_val_error is None or val_error <= best_val_error:
+    if best_val_error is None or val_error < best_val_error:  # Update best_val_error if val_error is less
         test_error = test(test_loader)
         best_val_error = val_error
 

@@ -42,16 +42,20 @@ def spherical_bessel_formulas(n):
 
 
 def bessel_basis(n, k):
-    zeros = Jn_zeros(n, k)
-    normalizer = []
-    for order in range(n):
-        normalizer_tmp = []
-        for i in range(k):
-            normalizer_tmp += [0.5 * Jn(zeros[order, i], order + 1)**2]
-        normalizer_tmp = 1 / np.array(normalizer_tmp)**0.5
-        normalizer += [normalizer_tmp]
+import numpy as np  # Import necessary module(s)
 
-    f = spherical_bessel_formulas(n)
+# Assuming Jn_zeros, Jn, spherical_bessel_formulas are defined/ imported correctly
+
+zeros = Jn_zeros(n, k)
+normalizer = []
+for order in range(n):
+    normalizer_tmp = []
+    for i in range(k):
+        normalizer_tmp.append(0.5 * Jn(zeros[order, i], order + 1)**2)  # Corrected calculation
+    normalizer_tmp = 1 / np.array(normalizer_tmp)**0.5
+    normalizer.append(normalizer_tmp)
+
+f = spherical_bessel_formulas(n)
     x = sym.symbols('x')
     bess_basis = []
     for order in range(n):
