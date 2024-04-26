@@ -181,12 +181,10 @@ def run(rank: int, world_size: int, args: argparse.ArgumentParser):
                       metadata=data.metadata() if hetero else None)
     model = model.to(device)
     if hetero:
-        # TODO (DamianSzwichtenberg):
-        # Provide fix for:
-        # RuntimeError: Modules with uninitialized parameters can't be used
-        # with `DistributedDataParallel`. Run a dummy forward pass to correctly
-        # initialize the modules.
-        pass
+        # Initialize modules before using DistributedDataParallel
+        with torch.no_grad():
+            dummy_input = torch.randn(1, input_size).to(device)
+            model(dummy_input)
     model = DDP(model, device_ids=[device])
     model.train()
 

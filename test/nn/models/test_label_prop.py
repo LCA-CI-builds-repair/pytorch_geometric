@@ -1,9 +1,9 @@
 import torch
-
+import torch
+import torch_geometric
 import torch_geometric.typing
-from torch_geometric.nn.models import LabelPropagation
+from torch_geometric.nn import LabelPropagation
 from torch_geometric.typing import SparseTensor
-
 
 def test_label_prop():
     y = torch.tensor([1, 0, 0, 2, 1, 1])
@@ -17,6 +17,7 @@ def test_label_prop():
     out = model(y, edge_index)
     assert out.size() == (6, 3)
     if torch_geometric.typing.WITH_TORCH_SPARSE:
+        # Add fallback code here if needed
         adj = SparseTensor.from_edge_index(edge_index, sparse_sizes=(6, 6))
         assert torch.allclose(model(y, adj.t()), out)
 
