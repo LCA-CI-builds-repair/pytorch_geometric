@@ -1,7 +1,5 @@
 from typing import Optional
-
 import torch
-from torch import Tensor
 
 import torch_geometric.typing
 from torch_geometric import warnings

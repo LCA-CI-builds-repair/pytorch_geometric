@@ -1,7 +1,4 @@
 from typing import Optional, Tuple
-
-import torch
-
 import torch_geometric.typing
 from torch_geometric.typing import pyg_lib
 
