@@ -232,6 +232,11 @@ if __name__ == '__main__':
     on_disk_dataset = in_memory_dataset.to_on_disk_dataset()
     loader = DataLoader(on_disk_dataset, **kwargs)
 
+    try:
+        import torch_geometric.typing
+    except ImportError:
+        print("Error: Unable to import torch_geometric.typing.")
+        
     print('On-Disk Dataset:')
     for _ in range(2):
         print(f'Start loading {len(loader)} mini-batches ... ', end='')

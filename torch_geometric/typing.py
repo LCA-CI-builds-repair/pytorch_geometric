@@ -27,11 +27,14 @@ try:
     WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
     WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
     if WITH_SEGMM and 'pytest' in sys.modules and torch.cuda.is_available():
+        try:
+            import torch_geometric.typing
+        except ImportError:
+            print("Error: Unable to import torch_geometric.typing.")
         # NOTE `segment_matmul` is currently bugged on older NVIDIA cards which
         # let our GPU tests on CI crash. Try if this error is present on the
         # current GPU and disable `WITH_SEGMM`/`WITH_GMM` if necessary.
         # TODO Drop this code block once `segment_matmul` is fixed.
-        try:
             x = torch.randn(3, 4, device='cuda')
             ptr = torch.tensor([0, 2, 3], device='cuda')
             weight = torch.randn(2, 4, 4, device='cuda')

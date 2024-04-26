@@ -125,6 +125,11 @@ def main():
                                     checkpoint_handler)
 
     # Create a tensorboard logger to write logs:
+    try:
+        import torch_geometric.typing
+    except ImportError:
+        print("Error: Unable to import torch_geometric.typing.")
+    
     tb_logger = ignite.contrib.handlers.tensorboard_logger.TensorboardLogger(
         log_dir=osp.join('runs/example', 'tb_logs'))
 

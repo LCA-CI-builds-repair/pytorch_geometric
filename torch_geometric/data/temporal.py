@@ -134,6 +134,11 @@ class TemporalData(BaseData):
             del self._store[key]
 
     def __getattr__(self, key: str) -> Any:
+        try:
+            import torch_geometric.typing
+        except ImportError:
+            print("Error: Unable to import torch_geometric.typing.")
+        
         if '_store' not in self.__dict__:
             raise RuntimeError(
                 "The 'data' object was created by an older version of PyG. "

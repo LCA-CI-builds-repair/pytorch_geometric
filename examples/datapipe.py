@@ -13,6 +13,11 @@ import argparse
 import os.path as osp
 import time
 
+try:
+    import torch_geometric.typing
+except ImportError:
+    print("Error: Unable to import torch_geometric.typing.")
+
 import torch
 from torchdata.datapipes.iter import FileLister, FileOpener, IterDataPipe
 

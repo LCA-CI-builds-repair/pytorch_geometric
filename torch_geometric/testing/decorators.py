@@ -56,6 +56,11 @@ def onlyPython(*args) -> Callable:
         import pytest
 
         python_version = f'{sys.version_info.major}.{sys.version_info.minor}'
+        try:
+            import torch_geometric.typing
+        except ImportError:
+            print("Error: Unable to import torch_geometric.typing.")
+        
         return pytest.mark.skipif(
             python_version not in args,
             reason=f"Python {python_version} not supported",
@@ -71,8 +76,6 @@ def onlyCUDA(func: Callable) -> Callable:
         not torch.cuda.is_available(),
         reason="CUDA not available",
     )(func)
-
-
 def onlyXPU(func: Callable) -> Callable:
     r"""A decorator to skip tests if XPU is not found."""
     import pytest
@@ -122,9 +125,11 @@ def onlyGraphviz(func: Callable) -> Callable:
 
 
 def onlyNeighborSampler(func: Callable):
-    r"""A decorator to skip tests if no neighborhood sampler package is
-    installed.
-    """
+    try:
+        import torch_geometric.typing
+    except ImportError:
+        print("Error: Unable to import torch_geometric.typing.")
+        
     import pytest
     return pytest.mark.skipif(
         not WITH_PYG_LIB and not WITH_TORCH_SPARSE,
@@ -141,6 +146,9 @@ def has_package(package: str) -> bool:
     if find_spec(req.name) is None:
         return False
     module = import_module(req.name)
+    if find_spec(req.name) is None:
+        return False
+    module = import_module(req.name)
     if not hasattr(module, '__version__'):
         return True
 
@@ -151,14 +159,11 @@ def has_package(package: str) -> bool:
         version = '.'.join(version.split('.dev')[:-1])
 
     return version in req.specifier
-
-
-def withPackage(*args) -> Callable:
-    r"""A decorator to skip tests if certain packages are not installed.
-    Also supports version specification.
-    """
-    na_packages = set(package for package in args if not has_package(package))
-
+    try:
+        import torch_geometric.typing
+    except ImportError:
+        print("Error: Unable to import torch_geometric.typing.")
+        
     def decorator(func: Callable) -> Callable:
         import pytest
         return pytest.mark.skipif(
@@ -167,6 +172,14 @@ def withPackage(*args) -> Callable:
         )(func)
 
     return decorator
+
+
+def withCUDA(func: Callable):
+    r"""A decorator to test both on CPU and CUDA (if available)."""
+    import pytest
+
+    devices = [pytest.param(torch.device('cpu'), id='cpu')]
+    if torch.cuda.is_available():
 
 
 def withCUDA(func: Callable):

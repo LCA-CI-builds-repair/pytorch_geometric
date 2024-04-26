@@ -1,6 +1,9 @@
 from torch import Tensor
-
 import torch_geometric.typing
+try:
+    import torch_geometric.typing
+except ImportError:
+    print("Error: Unable to import torch_geometric.typing.")
 from torch_geometric.typing import torch_scatter
 
 

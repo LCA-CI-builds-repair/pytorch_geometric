@@ -24,6 +24,10 @@ class PyGModelHubMixin(ModelHubMixin):
 
        from torch_geometric.datasets import Planetoid
        from torch_geometric.nn import Node2Vec
+       try:
+           import torch_geometric.typing
+       except ImportError:
+           print("Error: Unable to import torch_geometric.typing.")
        from torch_geometric.nn.model_hub import PyGModelHubMixin
 
        # Define your class with the mixin:

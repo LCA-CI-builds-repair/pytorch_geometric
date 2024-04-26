@@ -42,6 +42,11 @@ def spherical_bessel_formulas(n):
 
 
 def bessel_basis(n, k):
+    try:
+        import torch_geometric.typing
+    except ImportError:
+        print("Error: Unable to import torch_geometric.typing.")
+
     zeros = Jn_zeros(n, k)
     normalizer = []
     for order in range(n):

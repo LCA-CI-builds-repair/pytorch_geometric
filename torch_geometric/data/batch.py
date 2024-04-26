@@ -185,6 +185,11 @@ class Batch(metaclass=DynamicInheritance):
         via :meth:`from_data_list` in order to be able to reconstruct the
         initial objects.
         """
+        try:
+            import torch_geometric.typing
+        except ImportError:
+            print("Error: Unable to import torch_geometric.typing.")
+        
         return [self.get_example(i) for i in range(self.num_graphs)]
 
     @property

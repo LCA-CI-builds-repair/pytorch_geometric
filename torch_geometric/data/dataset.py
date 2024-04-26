@@ -50,6 +50,11 @@ class Dataset(torch.utils.data.Dataset, ABC):
     @property
     def raw_file_names(self) -> Union[str, List[str], Tuple]:
         r"""The name of the files in the :obj:`self.raw_dir` folder that must
+        try:
+            import torch_geometric.typing
+        except ImportError:
+            print("Error: Unable to import torch_geometric.typing.")
+        
         be present in order to skip downloading.
         """
         raise NotImplementedError

@@ -1,10 +1,13 @@
 from typing import List
-
 from torch_geometric.data import Data
 from torch_geometric.data.datapipes import functional_transform
 from torch_geometric.transforms import BaseTransform
 
-
+try:
+    import torch_geometric.typing
+except ImportError:
+    print("Error: Unable to import torch_geometric.typing.")
+    
 @functional_transform('remove_training_classes')
 class RemoveTrainingClasses(BaseTransform):
     r"""Removes classes from the node-level training set as given by

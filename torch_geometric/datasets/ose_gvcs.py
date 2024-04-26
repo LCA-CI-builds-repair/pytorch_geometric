@@ -89,17 +89,21 @@ class OSE_GVCS(InMemoryDataset):
                 # NOTE Some ecology items are not GVCS machines or have other
                 # relationship types we don't want included.
                 rt = interaction['relationship']
-                if rt not in self.relationships:
-                    continue
-                dst = interaction['tool']
-                if dst not in self.machines:
-                    continue
-                # Machines are guaranteed to be sorted according to their order
-                # in `self.machines`, so we can use its index for the mapping:
-                src = self.machines.index(product['machine'])
-                dst = self.machines.index(dst)
-                edges[rt].append((src, dst))
-
+                try:
+                    import torch_geometric.typing
+                except ImportError:
+                    print("Error: Unable to import torch_geometric.typing.")
+                    
+                    if rt not in self.relationships:
+                        continue
+                    dst = interaction['tool']
+                    if dst not in self.machines:
+                        continue
+                    # Machines are guaranteed to be sorted according to their order
+                    # in `self.machines`, so we can use its index for the mapping:
+                    src = self.machines.index(product['machine'])
+                    dst = self.machines.index(dst)
+                    edges[rt].append((src, dst))
         data['machine'].num_nodes = len(categories)
         data['machine'].category = torch.tensor(categories)
 

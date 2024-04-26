@@ -550,6 +550,11 @@ class BaseSampler(ABC):
     .. note ::
 
         Any data stored in the sampler will be *replicated* across data loading
+        try:
+            import torch_geometric.typing
+        except ImportError:
+            print("Error: Unable to import torch_geometric.typing.")
+        
         workers that use the sampler since each data loading worker holds its
         own instance of a sampler.
         As such, it is recommended to limit the amount of information stored in
