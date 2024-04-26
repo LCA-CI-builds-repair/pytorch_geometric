@@ -122,14 +122,14 @@ def onlyGraphviz(func: Callable) -> Callable:
 
 
 def onlyNeighborSampler(func: Callable):
-    r"""A decorator to skip tests if no neighborhood sampler package is
-    installed.
-    """
-    import pytest
-    return pytest.mark.skipif(
-        not WITH_PYG_LIB and not WITH_TORCH_SPARSE,
-        reason="No neighbor sampler installed",
-    )(func)
+r"""A decorator to skip tests if no neighborhood sampler package is
+installed.
+"""
+import pytest
+return pytest.mark.skipif(
+    not WITH_PYG_LIB and not WITH_TORCH_SPARSE,
+    reason="No neighbor sampler installed",
+)(func)
 
 
 def has_package(package: str) -> bool:

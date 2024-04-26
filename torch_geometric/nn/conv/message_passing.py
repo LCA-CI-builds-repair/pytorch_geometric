@@ -501,7 +501,6 @@ class MessagePassing(torch.nn.Module):
                 out = res
 
         return out
-
     def edge_updater(self, edge_index: Adj, **kwargs):
         r"""The initial call to compute or update features for each edge in the
         graph.

@@ -402,12 +402,9 @@ class LinearAlign(torch.nn.Module):
 
 
 ###############################################################################
-
 # These methods are used in order to receive the cumulated sizes of input
 # dictionaries. We make use of them for creating a unified homogeneous graph
 # representation, as well as to split the final output data once again.
-
-
 def get_node_offset_dict(
     input_dict: Dict[NodeType, Union[Tensor, SparseTensor]],
     type2id: Dict[NodeType, int],
@@ -515,16 +512,16 @@ def group_edge_placeholder(
                 "argument in your forward header.")
 
         # For grouping a list of SparseTensors, we convert them into a
-        # unified `edge_index` representation in order to avoid conflicts
-        # induced by re-shuffling the data.
-        rows, cols = [], []
-        for value, (src_type, _, dst_type) in zip(inputs, type2id):
-            col, row, value = value.coo()
-            assert value is None
-            rows.append(row + offset_dict[src_type])
-            cols.append(col + offset_dict[dst_type])
+        "argument in your forward header.")
 
-        row = torch.cat(rows, dim=0)
+    # For grouping a list of SparseTensors, we convert them into a
+    # unified `edge_index` representation in order to avoid conflicts
+    # induced by re-shuffling the data.
+    rows, cols = [], []
+    for value, (src_type, _, dst_type) in zip(inputs, type2id):
+        col, row, value = value.coo()
+        assert value is None
+        rows.append(row + offset_dict[src_type])
         col = torch.cat(cols, dim=0)
         return torch.stack([row, col], dim=0)
 

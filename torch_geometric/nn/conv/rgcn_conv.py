@@ -63,7 +63,6 @@ class RGCNConv(MessagePassing):
         compensate.
         We advise to check out both implementations to see which one fits your
         needs.
-
     .. note::
         :class:`RGCNConv` can use `dynamic shapes
         <https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index

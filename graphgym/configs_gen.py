@@ -119,8 +119,6 @@ def load_alias_file(fname):
 
 def exclude_list_id(list, id):
     return [list[i] for i in range(len(list)) if i != id]
-
-
 def gen_grid(args, config, config_budget={}):
     task_name = f'{get_fname(args.config)}_grid_{get_fname(args.grid)}'
     fname_start = get_fname(args.config)

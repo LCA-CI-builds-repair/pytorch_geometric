@@ -169,15 +169,15 @@ class ToHeteroTransformer(Transformer):
                     f"and underscores.")
 
     def placeholder(self, node: Node, target: Any, name: str):
-        # Adds a `get` call to the input dictionary for every node-type or
-        # edge-type.
-        if node.type is not None:
-            Type = EdgeType if self.is_edge_level(node) else NodeType
-            node.type = Dict[Type, node.type]
+    # Adds a `get` call to the input dictionary for every node-type or
+    # edge-type.
+    if node.type is not None:
+        Type = EdgeType if self.is_edge_level(node) else NodeType
+        node.type = Dict[Type, node.type]
 
-        self.graph.inserting_after(node)
+    self.graph.inserting_after(node)
 
-        dict_node = self.graph.create_node('call_function', target=get_dict,
+    dict_node = self.graph.create_node('call_function', target=get_dict,
                                            args=(node, ), name=f'{name}_dict')
         self.graph.inserting_after(dict_node)
 

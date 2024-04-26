@@ -222,13 +222,13 @@ class PyGModelHubMixin(ModelHubMixin):
                 The proxies are used on each request. (default: :obj:`None`)
             token (str or bool, optional): The token to use as HTTP bearer
                 authorization for remote files. If set to :obj:`True`, will use
-                the token generated when running :obj:`transformers-cli login`
-                (stored in :obj:`~/.huggingface`). It is **required** if you
-                want to use a private model. (default: :obj:`None`)
-            cache_dir (str, optional): The path to a directory in which a
-                downloaded model configuration should be cached if the
-                standard cache should not be used. (default: :obj:`None`)
-            local_files_only (bool, optional): Whether to only look at local
+            the token generated when running :obj:`transformers-cli login`
+            (stored in :obj:`~/.huggingface`). It is **required** if you
+            want to use a private model. (default: :obj:`None`)
+        cache_dir (str, optional): The path to a directory in which a
+            downloaded model configuration should be cached if the
+            standard cache should not be used. (default: :obj:`None`)
+        local_files_only (bool, optional): Whether to only look at local
                 files, *i.e.* do not try to download the model.
                 (default: :obj:`False`)
             **model_kwargs: Additional keyword arguments passed to the
