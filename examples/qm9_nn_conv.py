@@ -105,17 +105,27 @@ scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
 
 
 def train(epoch):
-    model.train()
-    loss_all = 0
+import torch
+import torch.nn.functional as F
+from torch.optim import Adam
 
-    for data in train_loader:
-        data = data.to(device)
-        optimizer.zero_grad()
-        loss = F.mse_loss(model(data), data.y)
-        loss.backward()
-        loss_all += loss.item() * data.num_graphs
-        optimizer.step()
-    return loss_all / len(train_loader.dataset)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+model = YourModelClass().to(device)
+optimizer = Adam(model.parameters(), lr=0.01)
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.7, patience=5, min_lr=0.0001)
+
+model.train()
+loss_all = 0
+
+for data in train_loader:
+    data = data.to(device)
+    optimizer.zero_grad()
+    loss = F.mse_loss(model(data), data.y)
+    loss.backward()
+    loss_all += loss.item() * data.num_graphs
+    optimizer.step()
+return loss_all / len(train_loader.dataset)
 
 
 def test(loader):

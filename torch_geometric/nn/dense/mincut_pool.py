@@ -95,7 +95,6 @@ def dense_mincut_pool(
     ortho_loss = torch.mean(ortho_loss)
 
     EPS = 1e-15
-
     # Fix and normalize coarsened adjacency matrix.
     ind = torch.arange(k, device=out_adj.device)
     out_adj[:, ind, ind] = 0
@@ -108,8 +107,6 @@ def dense_mincut_pool(
 
 def _rank3_trace(x: Tensor) -> Tensor:
     return torch.einsum('ijj->i', x)
-
-
 def _rank3_diag(x: Tensor) -> Tensor:
     eye = torch.eye(x.size(1)).type_as(x)
     out = eye * x.unsqueeze(2).expand(x.size(0), x.size(1), x.size(1))

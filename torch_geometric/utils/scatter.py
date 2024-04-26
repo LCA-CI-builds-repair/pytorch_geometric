@@ -218,17 +218,19 @@ def group_argsort(
             (default: :obj:`None`)
         descending (bool, optional): Controls the sorting order (ascending or
             descending). (default: :obj:`False`)
-        return_consecutive (bool, optional): If set to :obj:`True`, will not
-            offset the output to start from :obj:`0` for each group.
-            (default: :obj:`False`)
-        stable (bool, optional): Controls the relative order of equivalent
-            elements. (default: :obj:`False`)
+    import torch
+    
+    """
+    return_consecutive (bool, optional): If set to :obj:`True`, will not
+        offset the output to start from :obj:`0` for each group.
+        (default: :obj:`False`)
+    stable (bool, optional): Controls the relative order of equivalent
+        elements. (default: :obj:`False`)
     """
     # Only implemented under certain conditions for now :(
     assert src.dim() == 1 and index.dim() == 1
     assert dim == 0 or dim == -1
     assert src.numel() == index.numel() and src.numel() > 0
-
     # Normalize `src` to range [0, 1]:
     src = src - src.min()
     src = src / src.max()

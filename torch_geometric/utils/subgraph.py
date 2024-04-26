@@ -25,9 +25,6 @@ def get_num_hops(model: torch.nn.Module) -> int:
         ...     def forward(self, x, edge_index):
         ...         x = torch.F.relu(self.conv1(x, edge_index))
         ...         x = self.conv2(x, edge_index)
-        ...         return self.lin(x)
-        >>> get_num_hops(GNN())
-        2
     """
     from torch_geometric.nn.conv import MessagePassing
     num_hops = 0
@@ -35,8 +32,6 @@ def get_num_hops(model: torch.nn.Module) -> int:
         if isinstance(module, MessagePassing):
             num_hops += 1
     return num_hops
-
-
 def subgraph(
     subset: Union[Tensor, List[int]],
     edge_index: Tensor,

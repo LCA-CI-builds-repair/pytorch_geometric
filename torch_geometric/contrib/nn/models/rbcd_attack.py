@@ -170,17 +170,20 @@ class PRBCDAttack(torch.nn.Module):
         self.num_nodes = x.size(0)
 
         # For collecting attack statistics
-        self.attack_statistics = defaultdict(list)
+    from collections import defaultdict
+    from tqdm import tqdm
+    
+    self.attack_statistics = defaultdict(list)
 
-        # Prepare attack and define `self.iterable` to iterate over
-        step_sequence = self._prepare(budget)
+    # Prepare attack and define `self.iterable` to iterate over
+    step_sequence = self._prepare(budget)
 
-        # Loop over the epochs (Algorithm 1, line 5)
-        for step in tqdm(step_sequence, disable=not self.log, desc='Attack'):
-            loss, gradient = self._forward_and_gradient(
-                x, labels, idx_attack, **kwargs)
+    # Loop over the epochs (Algorithm 1, line 5)
+    for step in tqdm(step_sequence, disable=not self.log, desc='Attack'):
+        loss, gradient = self._forward_and_gradient(
+            x, labels, idx_attack, **kwargs)
 
-            scalars = self._update(step, gradient, x, labels, budget,
+        scalars = self._update(step, gradient, x, labels, budget,
                                    idx_attack, **kwargs)
 
             scalars['loss'] = loss.item()

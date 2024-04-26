@@ -440,6 +440,8 @@ def test_custom_neighbor_loader():
                              num_neighbors=[-1] * 2)
 
     assert str(loader1) == str(loader2)
+    import torch
+    
     assert len(loader1) == len(loader2)
 
     for batch1, batch2 in zip(loader1, loader2):
@@ -457,8 +459,6 @@ def test_custom_neighbor_loader():
         # ... but should sample the exact same number of edges:
         for edge_type in data.edge_types:
             assert batch1[edge_type].num_edges == batch2[edge_type].num_edges
-
-
 @onlyOnline
 @withPackage('pyg_lib')
 def test_temporal_custom_neighbor_loader_on_cora(get_dataset):

@@ -42,6 +42,8 @@ def spherical_bessel_formulas(n):
 
 
 def bessel_basis(n, k):
+    import numpy as np
+    
     zeros = Jn_zeros(n, k)
     normalizer = []
     for order in range(n):
