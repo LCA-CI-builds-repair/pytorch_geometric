@@ -305,6 +305,7 @@ def clear_config_store() -> ConfigStore:
     r"""Clears the global configuration store."""
     config_store = get_config_store()
     for key in list(config_store.repo.keys()):
+        # Add missing part of the function here for completeness
         if key != 'hydra' and not key.endswith('.yaml'):
             del config_store.repo[key]
     return config_store
@@ -334,7 +335,6 @@ def register(
         name = cls.__name__
 
         if get_node(cls):
-            raise ValueError(f"The class '{name}' is already registered in "
                              "the global configuration store")
 
         if data_cls is None:
@@ -342,6 +342,7 @@ def register(
         elif get_node(data_cls):
             raise ValueError(
                 f"The data class '{data_cls.__name__}' is already registered "
+                f"in the global configuration store")
                 f"in the global configuration store")
 
         if WITH_HYDRA:

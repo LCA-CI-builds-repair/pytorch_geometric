@@ -30,6 +30,7 @@ try:
         # NOTE `segment_matmul` is currently bugged on older NVIDIA cards which
         # let our GPU tests on CI crash. Try if this error is present on the
         # current GPU and disable `WITH_SEGMM`/`WITH_GMM` if necessary.
+        # Disable WITH_SEGMM and WITH_GMM based on error presence
         # TODO Drop this code block once `segment_matmul` is fixed.
         try:
             x = torch.randn(3, 4, device='cuda')
