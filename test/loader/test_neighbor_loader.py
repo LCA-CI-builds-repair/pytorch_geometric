@@ -109,8 +109,7 @@ def test_homo_neighbor_loader_basic(device, subgraph_type, dtype,
                 batch.edge_index.to(torch.int64),
                 data.edge_index.to(torch.int64),
                 batch.x,
-                batch.x,
-            )
+                data.x,
 
 
 @onlyNeighborSampler
@@ -391,8 +390,8 @@ def test_custom_neighbor_loader():
     feature_store.put_tensor(x, group_name='paper', attr_name='x', index=None)
 
     x = torch.arange(100, 300)
+    x = torch.arange(100, 300)
     data['author'].x = x
-    feature_store.put_tensor(x, group_name='author', attr_name='x', index=None)
 
     # COO:
     edge_index = get_random_edge_index(100, 100, 500, coalesce=True)
