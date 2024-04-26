@@ -161,44 +161,12 @@ class MD17(InMemoryDataset):
           - 10
           - 0
           - 1
-          - 2
-        * - Aspirin
-          - 211,762
-          - 21
-          - 0
-          - 1
-          - 2
-        * - Salicylic acid
-          - 320,231
-          - 16
-          - 0
-          - 1
-          - 2
-        * - Malonaldehyde
-          - 993,237
-          - 9
-          - 0
-          - 1
-          - 2
-        * - Ethanol
-          - 555,092
-          - 9
-          - 0
-          - 1
-          - 2
-        * - Toluene
-          - 442,790
-          - 15
-          - 0
-          - 1
-          - 2
-        * - Paracetamol
-          - 106,490
-          - 20
-          - 0
-          - 1
-          - 2
         * - Azobenzene
+          - 103-33-3
+          - 12
+          - 0
+          - 1
+          - 2
           - 99,999
           - 24
           - 0
@@ -208,15 +176,12 @@ class MD17(InMemoryDataset):
           - 100,000
           - 12
           - 0
-          - 1
-          - 2
-        * - Uracil (R)
-          - 100,000
-          - 12
+        * - Ethanol
+          - 64-17-5
+          - 9
           - 0
           - 1
           - 2
-        * - Naphthalene (R)
           - 100,000
           - 10
           - 0
