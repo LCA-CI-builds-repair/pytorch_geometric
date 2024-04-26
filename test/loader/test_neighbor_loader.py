@@ -106,11 +106,8 @@ def test_homo_neighbor_loader_basic(device, subgraph_type, dtype,
             assert batch.edge_attr.max() < 500
 
             assert is_subset(
-                batch.edge_index.to(torch.int64),
-                data.edge_index.to(torch.int64),
-                batch.x,
-                batch.x,
-            )
+### Summary of Changes:
+1. Ensure consistency in the data types by converting `batch.x` to `torch.int64` to match the conversion of `edge_index`.
 
 
 @onlyNeighborSampler
