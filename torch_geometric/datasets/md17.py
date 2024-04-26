@@ -199,6 +199,12 @@ class MD17(InMemoryDataset):
           - 1
           - 2
         * - Azobenzene
+          - 182,207
+          - 68
+          - 293
+          - 1.12
+          - 0
+          - 0
           - 99,999
           - 24
           - 0

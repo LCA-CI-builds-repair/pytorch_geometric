@@ -139,7 +139,8 @@ class TemporalData(BaseData):
                 "The 'data' object was created by an older version of PyG. "
                 "If this error occurred while loading an already existing "
                 "dataset, remove the 'processed/' directory in the dataset's "
-                "root folder and try again.")
+                "root folder and try again."
+            )
         return getattr(self._store, key)
 
     def __setattr__(self, key: str, value: Any):
