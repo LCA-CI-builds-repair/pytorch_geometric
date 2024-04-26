@@ -297,11 +297,6 @@ def to_dataclass(
 
 
 def get_config_store() -> ConfigStore:
-    r"""Returns the global configuration store."""
-    return ConfigStore.instance()
-
-
-def clear_config_store() -> ConfigStore:
     r"""Clears the global configuration store."""
     config_store = get_config_store()
     for key in list(config_store.repo.keys()):

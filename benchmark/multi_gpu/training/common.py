@@ -179,12 +179,8 @@ def run(rank: int, world_size: int, args: argparse.ArgumentParser,
                       metadata=data.metadata() if hetero else None)
     model = model.to(device)
     if hetero:
-        # TODO (DamianSzwichtenberg):
-        # Provide fix for:
-        # RuntimeError: Modules with uninitialized parameters can't be used
-        # with `DistributedDataParallel`. Run a dummy forward pass to correctly
-        # initialize the modules.
-        pass
+        # Dummy forward pass to initialize the modules
+        dummy()
     model = DDP(model, device_ids=[device])
     model.train()
 

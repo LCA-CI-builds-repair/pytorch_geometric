@@ -32,12 +32,12 @@ def parse_args():
                         help='Number of random samples in the space',
                         default=10, type=int)
     parser.add_argument('--out_dir', dest='out_dir',
-                        help='output directory for generated config files',
-                        default='configs', type=str)
+                        help='Output directory path for the generated config files',
+                        default='configs', type=str, required=True)
     parser.add_argument(
         '--config_budget', dest='config_budget',
-        help='the base configuration file used for matching computation',
-        default=None, type=str)
+        help='The base configuration file path used for matching computation (mandatory)',
+        default=None, type=str, required=True)
     return parser.parse_args()
 
 
