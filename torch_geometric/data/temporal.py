@@ -134,13 +134,11 @@ class TemporalData(BaseData):
             del self._store[key]
 
     def __getattr__(self, key: str) -> Any:
-        if '_store' not in self.__dict__:
-            raise RuntimeError(
-                "The 'data' object was created by an older version of PyG. "
-                "If this error occurred while loading an already existing "
-                "dataset, remove the 'processed/' directory in the dataset's "
-                "root folder and try again.")
-        return getattr(self._store, key)
+try:
+    return getattr(self._store, key)
+except KeyError:
+    raise RuntimeError("KeyError: The key '{}' is missing in the '_store' attribute.".format(key))
+    return None
 
     def __setattr__(self, key: str, value: Any):
         setattr(self._store, key, value)
