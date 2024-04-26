@@ -117,7 +117,7 @@ def train(epoch):
         optimizer.step()
     return loss_all / len(train_loader.dataset)
 
-
+def test(loader):
 def test(loader):
     model.eval()
     error = 0
@@ -133,7 +133,6 @@ for epoch in range(1, 301):
     lr = scheduler.optimizer.param_groups[0]['lr']
     loss = train(epoch)
     val_error = test(val_loader)
-    scheduler.step(val_error)
 
     if best_val_error is None or val_error <= best_val_error:
         test_error = test(test_loader)

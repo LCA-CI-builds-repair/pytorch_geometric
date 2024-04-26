@@ -61,6 +61,9 @@ def spmm(  # noqa: F811
     # `torch.sparse.mm` only supports reductions on CPU for PyTorch>=2.0.
     # This will currently throw on error for CUDA tensors.
     if torch_geometric.typing.WITH_PT20:
+        # Add code here to handle the case where WITH_PT20 is true
+    else:
+        # Add code here to handle the case where WITH_PT20 is false
 
         if src.is_cuda and (reduce == 'min' or reduce == 'max'):
             raise NotImplementedError(f"`{reduce}` reduction is not yet "
@@ -83,12 +86,13 @@ def spmm(  # noqa: F811
                           f"repeated conversion (got '{src.layout}')")
 
         # Use the default code path for `sum` reduction (works on CPU/GPU):
-        if reduce == 'sum':
-            return torch.sparse.mm(src, other)
-
         # Use the default code path with custom reduction (works on CPU):
         if src.layout == torch.sparse_csr and not src.is_cuda:
             return torch.sparse.mm(src, other, reduce)
+
+        # Simulate `mean` reduction by dividing by degree:
+        if reduce == 'mean':
+            # Add code here to simulate 'mean' reduction by dividing by degree
 
         # Simulate `mean` reduction by dividing by degree:
         if reduce == 'mean':

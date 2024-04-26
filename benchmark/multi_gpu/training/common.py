@@ -184,7 +184,8 @@ def run(rank: int, world_size: int, args: argparse.ArgumentParser,
         # RuntimeError: Modules with uninitialized parameters can't be used
         # with `DistributedDataParallel`. Run a dummy forward pass to correctly
         # initialize the modules.
-        pass
+        with torch.no_grad():
+            _ = model(torch.randn(1, *input_size).to(device))
     model = DDP(model, device_ids=[device])
     model.train()
 
