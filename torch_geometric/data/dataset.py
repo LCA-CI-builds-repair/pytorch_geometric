@@ -196,10 +196,9 @@ class Dataset(torch.utils.data.Dataset, ABC):
         files = self.processed_file_names
         # Prevent a common source of error in which `file_names` are not
         # defined as a property.
-        if isinstance(files, Callable):
-            files = files()
+        if callable(files):
+            files = files
         return [osp.join(self.processed_dir, f) for f in to_list(files)]
-
     @property
     def has_download(self) -> bool:
         r"""Checks whether the dataset defines a :meth:`download` method."""
