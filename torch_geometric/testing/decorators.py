@@ -77,19 +77,15 @@ def onlyXPU(func: Callable) -> Callable:
     r"""A decorator to skip tests if XPU is not found."""
     import pytest
     try:
-        import intel_extension_for_pytorch as ipex
-        xpu_available = ipex.xpu.is_available()
-    except ImportError:
-        xpu_available = False
-    return pytest.mark.skipif(
-        not xpu_available,
+from typing import Callable
+
         reason="XPU not available",
     )(func)
 
 
 def onlyOnline(func: Callable):
     r"""A decorator to skip tests if there exists no connection to the
-    internet.
+    internet."""
     """
     import http.client as httplib
 
@@ -117,18 +113,22 @@ def onlyGraphviz(func: Callable) -> Callable:
     import pytest
     return pytest.mark.skipif(
         not has_graphviz(),
-        reason="Graphviz not installed",
+from typing import Callable
+
+    """
+    import pytest
+    from torch_geometric.utils import has_graphviz
+    return pytest.mark.skipif(
+        not has_graphviz(),
+        reason="Graphviz not installed"
     )(func)
 
 
 def onlyNeighborSampler(func: Callable):
     r"""A decorator to skip tests if no neighborhood sampler package is
-    installed.
-    """
-    import pytest
-    return pytest.mark.skipif(
-        not WITH_PYG_LIB and not WITH_TORCH_SPARSE,
+    installed."""
         reason="No neighbor sampler installed",
+    )(func)
     )(func)
 
 
@@ -136,7 +136,6 @@ def has_package(package: str) -> bool:
     r"""Returns :obj:`True` in case :obj:`package` is installed."""
     if '|' in package:
         return any(has_package(p) for p in package.split('|'))
-
     req = Requirement(package)
     if find_spec(req.name) is None:
         return False
@@ -161,13 +160,13 @@ def withPackage(*args) -> Callable:
 
     def decorator(func: Callable) -> Callable:
         import pytest
+        import pytest
         return pytest.mark.skipif(
             len(na_packages) > 0,
-            reason=f"Package(s) {na_packages} are not installed",
+            reason=f"Package(s) {na_packages} are not installed"
         )(func)
 
     return decorator
-
 
 def withCUDA(func: Callable):
     r"""A decorator to test both on CPU and CUDA (if available)."""
@@ -190,6 +189,8 @@ def withCUDA(func: Callable):
 
     return pytest.mark.parametrize('device', devices)(func)
 
+
+from typing import Callable
 
 def disableExtensions(func: Callable):
     r"""A decorator to temporarily disable the usage of the
