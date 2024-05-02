@@ -539,11 +539,12 @@ class LightningLinkData(LightningData):
         input_val_time (torch.Tensor, optional): The timestamp
             of validation edges. (default: :obj:`None`)
         input_test_edges (Tensor or EdgeType or Tuple[EdgeType, Tensor]):
+        input_test_edges (Tensor or EdgeType or Tuple[EdgeType, Tensor]):
             The test edges. (default: :obj:`None`)
         input_test_labels (torch.Tensor, optional):
             The labels of test edges. (default: :obj:`None`)
-        input_test_time (torch.Tensor, optional): The timestamp
-            of test edges. (default: :obj:`None`)
+        input_test_time (torch.Tensor, optional): 
+            The timestamp of test edges. (default: :obj:`None`)
         input_pred_edges (Tensor or EdgeType or Tuple[EdgeType, Tensor]):
             The prediction edges. (default: :obj:`None`)
         input_pred_labels (torch.Tensor, optional):
