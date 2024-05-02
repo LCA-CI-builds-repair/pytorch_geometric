@@ -487,39 +487,40 @@ def test_temporal_custom_neighbor_loader_on_cora(get_dataset):
         index=None,
     )
     hetero_data['paper'].time = data.time
+import torch
 
-    # Sort according to time in local neighborhoods:
-    row, col = data.edge_index
-    perm = ((col * (data.num_nodes + 1)) + data.time[row]).argsort()
-    edge_index = data.edge_index[:, perm]
+# Sort according to time in local neighborhoods:
+row, col = data.edge_index
+perm = ((col * (data.num_nodes + 1)) + data.time[row]).argsort()
+edge_index = data.edge_index[:, perm]
 
-    graph_store.put_edge_index(
-        edge_index,
-        edge_type=('paper', 'to', 'paper'),
-        layout='coo',
-        is_sorted=True,
-        size=(data.num_nodes, data.num_nodes),
-    )
-    hetero_data['paper', 'to', 'paper'].edge_index = data.edge_index
+graph_store.put_edge_index(
+    edge_index,
+    edge_type=('paper', 'to', 'paper'),
+    layout='coo',
+    is_sorted=True,
+    size=(data.num_nodes, data.num_nodes),
+)
+hetero_data['paper', 'to', 'paper'].edge_index = data.edge_index
 
-    loader1 = NeighborLoader(
-        hetero_data,
-        num_neighbors=[-1, -1],
-        input_nodes='paper',
-        time_attr='time',
-        batch_size=128,
-    )
+loader1 = NeighborLoader(
+    hetero_data,
+    num_neighbors=[-1, -1],
+    input_nodes='paper',
+    time_attr='time',
+    batch_size=128,
+)
 
-    loader2 = NeighborLoader(
-        (feature_store, graph_store),
-        num_neighbors=[-1, -1],
-        input_nodes='paper',
-        time_attr='time',
-        batch_size=128,
-    )
+loader2 = NeighborLoader(
+    (feature_store, graph_store),
+    num_neighbors=[-1, -1],
+    input_nodes='paper',
+    time_attr='time',
+    batch_size=128,
+)
 
-    for batch1, batch2 in zip(loader1, loader2):
-        assert torch.equal(batch1['paper'].time, batch2['paper'].time)
+for batch1, batch2 in zip(loader1, loader2):
+    assert torch.equal(batch1['paper'].time, batch2['paper'].time)
 
 
 @withPackage('pyg_lib', 'torch_sparse')
