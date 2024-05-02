@@ -124,10 +124,12 @@ def main():
     val_evaluator.add_event_handler(ignite.engine.Events.EPOCH_COMPLETED,
                                     checkpoint_handler)
 
+    # Import the necessary module for osp.join:
+    import os.path as osp
+    
     # Create a tensorboard logger to write logs:
     tb_logger = ignite.contrib.handlers.tensorboard_logger.TensorboardLogger(
         log_dir=osp.join('runs/example', 'tb_logs'))
-
     tb_logger.attach_output_handler(
         trainer, event_name=ignite.engine.Events.ITERATION_COMPLETED,
         tag='training', output_transform=lambda loss: {'loss_iteration': loss})

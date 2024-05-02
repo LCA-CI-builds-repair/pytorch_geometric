@@ -176,6 +176,11 @@ class Dataset(torch.utils.data.Dataset, ABC):
             self._data_list = self.len() * [None]
         return self._infer_num_classes(y)
 
+    # Import the necessary module for osp.join:
+    import os.path as osp
+    
+    # Ensure that the `to_list` function is properly imported and accessible for use in the code snippet.
+
     @property
     def raw_paths(self) -> List[str]:
         r"""The absolute filepaths that must be present in order to skip
@@ -199,7 +204,6 @@ class Dataset(torch.utils.data.Dataset, ABC):
         if isinstance(files, Callable):
             files = files()
         return [osp.join(self.processed_dir, f) for f in to_list(files)]
-
     @property
     def has_download(self) -> bool:
         r"""Checks whether the dataset defines a :meth:`download` method."""

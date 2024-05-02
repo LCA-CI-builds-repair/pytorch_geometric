@@ -7,10 +7,9 @@ import torch
 import torch_geometric.typing
 
 JIT_WARNING = ("Could not convert the 'model' into a jittable version. "
-               "As such, 'torch.compile' may currently fail to correctly "
+               "As such, 'torch.jit.compile' may currently fail to correctly "
                "optimize your model. 'MessagePassing.jittable()' reported "
                "the following error: {error}")
-
 
 def to_jittable(model: torch.nn.Module) -> torch.nn.Module:
     if isinstance(model, torch_geometric.nn.MessagePassing):
