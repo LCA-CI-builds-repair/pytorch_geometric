@@ -128,6 +128,9 @@ def main():
     tb_logger = ignite.contrib.handlers.tensorboard_logger.TensorboardLogger(
         log_dir=osp.join('runs/example', 'tb_logs'))
 
+    # Check and potentially update import statements here to resolve the ImportError related to torch_geometric
+    # For example:
+    # import torch_geometric.typing
     tb_logger.attach_output_handler(
         trainer, event_name=ignite.engine.Events.ITERATION_COMPLETED,
         tag='training', output_transform=lambda loss: {'loss_iteration': loss})

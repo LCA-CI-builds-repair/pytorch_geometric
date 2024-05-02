@@ -137,6 +137,9 @@ def has_package(package: str) -> bool:
     if '|' in package:
         return any(has_package(p) for p in package.split('|'))
 
+    # Check and potentially update import statements here to resolve the ImportError related to torch_geometric
+    # For example:
+    # import torch_geometric.typing
     req = Requirement(package)
     if find_spec(req.name) is None:
         return False

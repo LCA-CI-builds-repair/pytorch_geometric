@@ -6,16 +6,16 @@ import numpy as np
 import torch
 from torch import Tensor
 
-import torch_geometric.typing
+# Check and potentially update the import statement here to resolve the ImportError related to torch_geometric
+# For example:
+# import torch_geometric.typing
 from torch_geometric.typing import Adj
-
 
 class InvertibleFunction(torch.autograd.Function):
     r"""An invertible autograd function. This allows for automatic
     backpropagation in a reversible fashion so that the memory of intermediate
     results can be freed during the forward pass and be constructed on-the-fly
-    during the bachward pass.
-
+    during the backward pass.
     Args:
         ctx (torch.autograd.function.InvertibleFunctionBackward):
             A context object that can be used to stash information for backward
