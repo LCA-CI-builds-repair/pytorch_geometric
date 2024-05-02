@@ -121,8 +121,7 @@ class InvertibleFunction(torch.autograd.Function):
 
         filtered_detached_inputs = tuple(
             filter(
-                lambda x: x.requires_grad
-                if isinstance(x, torch.Tensor) else False,
+                lambda x: x.requires_grad if isinstance(x, torch.Tensor) else False,
                 detached_inputs,
             ))
         gradients = torch.autograd.grad(

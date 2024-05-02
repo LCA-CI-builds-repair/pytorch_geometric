@@ -21,6 +21,9 @@ WITH_ARM = platform.machine() != 'x86_64'
 if not hasattr(torch, 'sparse_csc'):
     torch.sparse_csc = -1
 
+import sys
+import torch
+
 try:
     import pyg_lib  # noqa
     WITH_PYG_LIB = True
