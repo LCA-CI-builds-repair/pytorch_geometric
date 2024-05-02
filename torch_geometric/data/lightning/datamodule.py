@@ -181,12 +181,11 @@ class LightningData(LightningDataModule):
                 num_devices = self.trainer.num_processes
                 num_devices = max(num_devices, self.trainer.num_gpus)
 
-            if num_devices > 1:
+            if num_devices > 1 and self.loader == 'full':
                 raise ValueError(
                     f"'{self.__class__.__name__}' with loader='full' requires "
                     f"training on a single device")
         super().prepare_data()
-
     def full_dataloader(self, **kwargs) -> DataLoader:
         warnings.filterwarnings('ignore', '.*does not have many workers.*')
         warnings.filterwarnings('ignore', '.*data loading bottlenecks.*')
