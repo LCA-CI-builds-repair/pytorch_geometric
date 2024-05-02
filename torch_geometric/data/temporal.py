@@ -140,6 +140,7 @@ class TemporalData(BaseData):
                 "If this error occurred while loading an already existing "
                 "dataset, remove the 'processed/' directory in the dataset's "
                 "root folder and try again.")
+        return self.__dict__[key]
         return getattr(self._store, key)
 
     def __setattr__(self, key: str, value: Any):
