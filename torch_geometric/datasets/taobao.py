@@ -24,7 +24,6 @@ class Taobao(InMemoryDataset):
     towards items (alongside with timestamps).
     Edges between items and categories assign each item to its set of
     categories.
-
     Args:
         root (str): Root directory where the dataset should be saved.
         transform (callable, optional): A function/transform that takes in an

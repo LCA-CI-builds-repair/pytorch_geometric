@@ -458,7 +458,6 @@ def test_custom_neighbor_loader():
         for edge_type in data.edge_types:
             assert batch1[edge_type].num_edges == batch2[edge_type].num_edges
 
-
 @onlyOnline
 @withPackage('pyg_lib')
 def test_temporal_custom_neighbor_loader_on_cora(get_dataset):

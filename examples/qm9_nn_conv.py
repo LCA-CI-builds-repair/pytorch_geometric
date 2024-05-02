@@ -123,8 +123,8 @@ def test(loader):
     error = 0
 
     for data in loader:
-        data = data.to(device)
-        error += (model(data) * std - data.y * std).abs().sum().item()  # MAE
+        data = data.to(device)  # Ensure the device is defined
+        error += (model(data) * std - data.y * std).abs().sum().item()  # Calculate Mean Absolute Error (MAE)
     return error / len(loader.dataset)
 
 
@@ -134,7 +134,6 @@ for epoch in range(1, 301):
     loss = train(epoch)
     val_error = test(val_loader)
     scheduler.step(val_error)
-
     if best_val_error is None or val_error <= best_val_error:
         test_error = test(test_loader)
         best_val_error = val_error
