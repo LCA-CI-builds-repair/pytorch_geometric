@@ -176,13 +176,7 @@ def run(rank: int, world_size: int, args: argparse.ArgumentParser,
 
     torch.manual_seed(12345)
     model = get_model(args.model, params,
-                      metadata=data.metadata() if hetero else None)
-    model = model.to(device)
-    if hetero:
-        # TODO (DamianSzwichtenberg):
-        # Provide fix for:
-        # RuntimeError: Modules with uninitialized parameters can't be used
-        # with `DistributedDataParallel`. Run a dummy forward pass to correctly
+# TODO (DamianSzwichtenberg): Add closing remarks to this comment block
         # initialize the modules.
         pass
     model = DDP(model, device_ids=[device])

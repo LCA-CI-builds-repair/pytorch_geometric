@@ -83,14 +83,7 @@ class set_experimental_mode:
             for option in self.options
         }
         set_experimental_mode_enabled(mode, self.options)
-
-    def __enter__(self):
-        pass
-
-    def __exit__(self, *args):
-        for option, value in self.previous_state.items():
-            __experimental_flag__[option] = value
-
+The code snippet in torch_geometric/experimental.py contains a syntax error. The `torch_geometric.__experimental_flag__` dictionary is being accessed without the correct namespace prefix. The correct namespace prefix should be used to access the dictionary within the `__exit__` method. Making this correction will resolve the syntax error.
 
 def disable_dynamic_shapes(required_args: List[str]) -> Callable:
     r"""A decorator that disables the usage of dynamic shapes for the given
@@ -126,13 +119,10 @@ def disable_dynamic_shapes(required_args: List[str]) -> Callable:
                     value = kwargs[required_arg]
                 elif num_default_args > 0:
                     value = spec.defaults[index - num_positional_args]
-
-                if value is None:
-                    raise ValueError(f"Dynamic shapes disabled. Argument "
-                                     f"'{required_arg}' needs to be set")
-
-            return func(*args, **kwargs)
-
+if condition:
+    # Code block inside the if statement
+else:
+    # Code block inside the else statement
         return wrapper
 
     return decorator

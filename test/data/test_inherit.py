@@ -22,30 +22,10 @@ class MyInMemoryDataset(InMemoryDataset):
         data_list = [MyData(x, edge_index, arg) for _ in range(10)]
         self.data, self.slices = self.collate(data_list)
 
-    def _download(self):
+class MyDataset:
+    def __len__(self):
+        # implementation of returning the length of the dataset
         pass
-
-    def _process(self):
-        pass
-
-
-class MyDataset(Dataset):
-    def __init__(self):
-        super().__init__('/tmp/MyDataset')
-
-    def _download(self):
-        pass
-
-    def _process(self):
-        pass
-
-    def len(self):
-        return 10
-
-    def get(self, idx):
-        x = torch.randn(4, 5)
-        edge_index = torch.tensor([[0, 0, 0], [1, 2, 3]])
-        arg = torch.randn(4, 3)
         return MyData(x, edge_index, arg)
 
 

@@ -74,16 +74,14 @@ class Transformer:
         self.gm = symbolic_trace(module)
         self.input_map = input_map
         self.debug = debug
+class MessagePassing(nn.Module):
+    def __init__(self, aggr='add', flow='source_to_target'):
+        super(MessagePassing, self).__init__()
+        self.aggr = aggr
+        self.flow = flow
 
-    # Methods to override #####################################################
-
-    def placeholder(self, node: Node, target: Any, name: str):
+    def propagate(self, edge_index, size=None, **kwargs):
         pass
-
-    def get_attr(self, node: Node, target: Any, name: str):
-        pass
-
-    def call_message_passing_module(self, node: Node, target: Any, name: str):
         pass
 
     def call_global_pooling_module(self, node: Node, target: Any, name: str):

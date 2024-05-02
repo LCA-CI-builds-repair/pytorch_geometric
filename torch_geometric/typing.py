@@ -39,13 +39,17 @@ try:
         except RuntimeError:
             WITH_GMM = False
             WITH_SEGMM = False
-    WITH_SAMPLED_OP = hasattr(pyg_lib.ops, 'sampled_add')
-    WITH_INDEX_SORT = hasattr(pyg_lib.ops, 'index_sort')
-    WITH_METIS = hasattr(pyg_lib, 'partition')
-    WITH_EDGE_TIME_NEIGHBOR_SAMPLE = ('edge_time' in inspect.signature(
-        pyg_lib.sampler.neighbor_sample).parameters)
-    WITH_WEIGHTED_NEIGHBOR_SAMPLE = ('edge_weight' in inspect.signature(
-        pyg_lib.sampler.neighbor_sample).parameters)
+try:
+    import torch
+    from torch import Tensor
+    from torch.nn import Module
+    from typing import Union, Tuple, List, Dict, Optional
+    from torch_sparse import SparseTensor
+    from torch_scatter import scatter
+    from torch_geometric.typing import Adj, Size, NoneType, OptTensor, OptPairTensor, \
+        PairTensor, OptSparseTensor, SparseTensor, OptTensor, OptPairTensor
+except ImportError:
+    pass
 except Exception as e:
     if not isinstance(e, ImportError):  # pragma: no cover
         warnings.warn(f"An issue occurred while importing 'pyg-lib'. "

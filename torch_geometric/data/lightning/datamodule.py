@@ -541,15 +541,19 @@ class LightningLinkData(LightningData):
         input_test_edges (Tensor or EdgeType or Tuple[EdgeType, Tensor]):
             The test edges. (default: :obj:`None`)
         input_test_labels (torch.Tensor, optional):
-            The labels of test edges. (default: :obj:`None`)
-        input_test_time (torch.Tensor, optional): The timestamp
-            of test edges. (default: :obj:`None`)
-        input_pred_edges (Tensor or EdgeType or Tuple[EdgeType, Tensor]):
-            The prediction edges. (default: :obj:`None`)
-        input_pred_labels (torch.Tensor, optional):
-            The labels of prediction edges. (default: :obj:`None`)
-        input_pred_time (torch.Tensor, optional): The timestamp
-            of prediction edges. (default: :obj:`None`)
+def __init__(
+    self,
+    root: Optional[str] = None,
+    transform: Optional[Callable] = None,
+    pre_transform: Optional[Callable] = None,
+    pre_filter: Optional[Callable] = None,
+    *,
+    add_self_loops: bool = True,
+    num_negative_samples: Optional[int] = None,
+):
+    super().__init__(root, transform, pre_transform, pre_filter)
+    self.add_self_loops = add_self_loops
+    self.num_negative_samples = num_negative_samples
         loader (str): The scalability technique to use (:obj:`"full"`,
             :obj:`"neighbor"`). (default: :obj:`"neighbor"`)
         link_sampler (BaseSampler, optional): A custom sampler object to

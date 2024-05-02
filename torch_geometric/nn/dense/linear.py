@@ -208,9 +208,16 @@ class HeteroLinear(torch.nn.Module):
         num_types (int): The number of types.
         is_sorted (bool, optional): If set to :obj:`True`, assumes that
             :obj:`type_vec` is sorted. This avoids internal re-sorting of the
-            data and can improve runtime and memory efficiency.
-            (default: :obj:`False`)
-        **kwargs (optional): Additional arguments of
+def __init__(self, in_channels: int, out_channels: int, reparametrize: bool = False):
+    """
+    Constructor of the Linear layer.
+    
+    Args:
+        in_channels (int): Number of input features.
+        out_channels (int): Number of output features.
+        reparametrize (bool): Whether to reparametrize the weights.
+            If True, reparametrization will be applied; if False, standard weights will be used.
+    """
             :class:`torch_geometric.nn.Linear`.
 
     Shapes:

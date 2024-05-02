@@ -359,35 +359,17 @@ def register(
     return bounded_register
 
 
-###############################################################################
-
-
-@dataclass
-class Transform:
-    pass
-
+from dataclasses import dataclass
 
 @dataclass
-class Dataset:
-    pass
-
-
-@dataclass
-class Model:
-    pass
-
+class Person:
+    name: str
+    age: int
 
 @dataclass
-class Optimizer:
-    pass
-
-
-@dataclass
-class LRScheduler:
-    pass
-
-
-@dataclass
+class Address:
+    street: str
+    city: str
 class Config:
     dataset: Dataset = MISSING
     model: Model = MISSING
