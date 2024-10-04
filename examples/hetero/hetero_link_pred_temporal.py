@@ -12,6 +12,9 @@ from torch_geometric.nn import to_hetero
 from torch_geometric.nn.conv import SAGEConv
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--profile_code', action='store_true',
+                    help='Display timing information')
+parser.set_defaults(profile_code=False)
 parser.add_argument('--use_weighted_loss', action='store_true',
                     help='Whether to use weighted MSE loss.')
 args = parser.parse_args()
@@ -144,7 +147,8 @@ def train(train_dl, val_dl):
         t1 = time.time()
         train_time += t1 - t0
         t0 = time.time()
-    print(f'train time = {train_time}')
+    if args.profile_code is True:
+        print(f'train time = {train_time}')
     return float(loss)
 
 
@@ -164,7 +168,8 @@ def test(dl, desc='val'):
         t1 = time.time()
         val_time += t1 - t0
         t0 = time.time()
-    print(f'{desc} time = {val_time}')
+    if args.profile_code is True:
+        print(f'{desc} time = {val_time}')
     return float(rmse)
 
 
