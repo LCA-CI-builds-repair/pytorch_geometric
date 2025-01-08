@@ -148,9 +148,7 @@ class QM9(InMemoryDataset):
     raw_url2 = 'https://ndownloader.figshare.com/files/3195404'
 
     if self.featurize:
-        processed_url = 'https://data.pyg.org/datasets/qm9_v3_featurized.zip'
-    else:
-        processed_url = 'https://data.pyg.org/datasets/qm9_v3.zip'
+    processed_url = None  # Define as None for initialization
 
     def __init__(
         self,
@@ -164,6 +162,10 @@ class QM9(InMemoryDataset):
         super().__init__(root, transform, pre_transform, pre_filter,
                          force_reload=force_reload)
         self.featurize = featurize
+        if self.featurize:
+            self.processed_url = 'https://data.pyg.org/datasets/qm9_v3_featurized.zip'
+        else:
+            self.processed_url = 'https://data.pyg.org/datasets/qm9_v3.zip'
         self.load(self.processed_paths[0])
 
     def mean(self, target: int) -> float:
