@@ -23,6 +23,7 @@ if not hasattr(torch, 'sparse_csc'):
 
 try:
     import pyg_lib  # noqa
+    WITH_EDGE_TIME_NEIGHBOR_SAMPLE = False
     WITH_PYG_LIB = True
     WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
     WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
