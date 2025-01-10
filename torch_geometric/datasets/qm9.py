@@ -146,11 +146,9 @@ class QM9(InMemoryDataset):
     raw_url = ('https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/'
                'molnet_publish/qm9.zip')
     raw_url2 = 'https://ndownloader.figshare.com/files/3195404'
-
-    if self.featurize:
-        processed_url = 'https://data.pyg.org/datasets/qm9_v3_featurized.zip'
-    else:
-        processed_url = 'https://data.pyg.org/datasets/qm9_v3.zip'
+    processed_url = 'https://data.pyg.org/datasets/qm9_v3.zip'
+    processed_url_featurized = ('https://data.pyg.org/datasets/'
+                                 'qm9_v3_featurized.zip')
 
     def __init__(
         self,
@@ -204,7 +202,10 @@ class QM9(InMemoryDataset):
             os.rename(osp.join(self.raw_dir, '3195404'),
                       osp.join(self.raw_dir, 'uncharacterized.txt'))
         except ImportError:
-            path = download_url(self.processed_url, self.raw_dir)
+            if self.featurize:
+                path = download_url(self.processed_url_featurized, self.raw_dir)
+            else:
+                path = download_url(self.processed_url, self.raw_dir)
             extract_zip(path, self.raw_dir)
             os.unlink(path)
 
