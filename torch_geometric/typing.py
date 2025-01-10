@@ -24,40 +24,45 @@ if not hasattr(torch, 'sparse_csc'):
 try:
     import pyg_lib  # noqa
     WITH_PYG_LIB = True
-    WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
-    WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
-    if WITH_SEGMM and 'pytest' in sys.modules and torch.cuda.is_available():
-        # NOTE `segment_matmul` is currently bugged on older NVIDIA cards which
-        # let our GPU tests on CI crash. Try if this error is present on the
-        # current GPU and disable `WITH_SEGMM`/`WITH_GMM` if necessary.
-        # TODO Drop this code block once `segment_matmul` is fixed.
-        try:
-            x = torch.randn(3, 4, device='cuda')
-            ptr = torch.tensor([0, 2, 3], device='cuda')
-            weight = torch.randn(2, 4, 4, device='cuda')
-            out = pyg_lib.ops.segment_matmul(x, ptr, weight)
-        except RuntimeError:
-            WITH_GMM = False
-            WITH_SEGMM = False
-    WITH_SAMPLED_OP = hasattr(pyg_lib.ops, 'sampled_add')
-    WITH_INDEX_SORT = hasattr(pyg_lib.ops, 'index_sort')
-    WITH_METIS = hasattr(pyg_lib, 'partition')
-    WITH_EDGE_TIME_NEIGHBOR_SAMPLE = ('edge_time' in inspect.signature(
-        pyg_lib.sampler.neighbor_sample).parameters)
-    WITH_WEIGHTED_NEIGHBOR_SAMPLE = ('edge_weight' in inspect.signature(
-        pyg_lib.sampler.neighbor_sample).parameters)
+    try:
+        WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
+        WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
+        if WITH_SEGMM and 'pytest' in sys.modules and torch.cuda.is_available():
+            # NOTE `segment_matmul` is currently bugged on older NVIDIA cards which
+            # let our GPU tests on CI crash. Try if this error is present on the
+            # current GPU and disable `WITH_SEGMM`/`WITH_GMM` if necessary.
+            # TODO Drop this code block once `segment_matmul` is fixed.
+            try:
+                x = torch.randn(3, 4, device='cuda')
+                ptr = torch.tensor([0, 2, 3], device='cuda')
+                weight = torch.randn(2, 4, 4, device='cuda')
+                out = pyg_lib.ops.segment_matmul(x, ptr, weight)
+            except RuntimeError:
+                WITH_GMM = False
+                WITH_SEGMM = False
+        WITH_SAMPLED_OP = hasattr(pyg_lib.ops, 'sampled_add')
+        WITH_INDEX_SORT = hasattr(pyg_lib.ops, 'index_sort')
+        WITH_METIS = hasattr(pyg_lib, 'partition')
+        WITH_EDGE_TIME_NEIGHBOR_SAMPLE = ('edge_time' in inspect.signature(
+            pyg_lib.sampler.neighbor_sample).parameters)
+        WITH_WEIGHTED_NEIGHBOR_SAMPLE = ('edge_weight' in inspect.signature(
+            pyg_lib.sampler.neighbor_sample).parameters)
+    except AttributeError:
+        # Fallback to False if the required attributes are not found
+        WITH_GMM = False
+        WITH_SEGMM = False
+        WITH_SAMPLED_OP = False
+        WITH_INDEX_SORT = False
+        WITH_METIS = False
+        WITH_EDGE_TIME_NEIGHBOR_SAMPLE = False
+        WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
 except Exception as e:
     if not isinstance(e, ImportError):  # pragma: no cover
         warnings.warn(f"An issue occurred while importing 'pyg-lib'. "
                       f"Disabling its usage. Stacktrace: {e}")
     pyg_lib = object
     WITH_PYG_LIB = False
-    WITH_GMM = False
-    WITH_SEGMM = False
-    WITH_SAMPLED_OP = False
-    WITH_INDEX_SORT = False
-    WITH_METIS = False
-    WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
+    WITH_GMM = WITH_SEGMM = WITH_SAMPLED_OP = WITH_INDEX_SORT = WITH_METIS = WITH_EDGE_TIME_NEIGHBOR_SAMPLE = WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
 
 try:
     import torch_scatter  # noqa
