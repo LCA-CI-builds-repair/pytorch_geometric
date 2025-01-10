@@ -161,7 +161,7 @@ class QM9(InMemoryDataset):
         force_reload: bool = False,
         featurize: bool = False
     ):
-        super().__init__(root, transform, pre_transform, pre_filter,
+        super(QM9, self).__init__(root, transform, pre_transform, pre_filter,
                          force_reload=force_reload)
         self.featurize = featurize
         self.load(self.processed_paths[0])
