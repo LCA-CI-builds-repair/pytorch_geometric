@@ -146,15 +146,12 @@ class QM9(InMemoryDataset):
     raw_url = ('https://deepchemdata.s3-us-west-1.amazonaws.com/datasets/'
                'molnet_publish/qm9.zip')
     raw_url2 = 'https://ndownloader.figshare.com/files/3195404'
-
-    if self.featurize:
-        processed_url = 'https://data.pyg.org/datasets/qm9_v3_featurized.zip'
-    else:
-        processed_url = 'https://data.pyg.org/datasets/qm9_v3.zip'
+    processed_url = 'https://data.pyg.org/datasets/qm9_v3' # base url
 
     def __init__(
         self,
         root: str,
+        featurize: bool = False,
         transform: Optional[Callable] = None,
         pre_transform: Optional[Callable] = None,
         pre_filter: Optional[Callable] = None,
@@ -162,7 +159,12 @@ class QM9(InMemoryDataset):
         featurize: bool = False
     ):
         super().__init__(root, transform, pre_transform, pre_filter,
-                         force_reload=force_reload)
+                         force_reload = force_reload)  # Add force_reload=force_reload
+
+        if featurize:
+            self.processed_url = f'{self.processed_url}_featurized.zip'
+        else:
+            self.processed_url = f'{self.processed_url}.zip'
         self.featurize = featurize
         self.load(self.processed_paths[0])
 
