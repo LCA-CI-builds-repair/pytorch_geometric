@@ -164,6 +164,7 @@ class QM9(InMemoryDataset):
         super().__init__(root, transform, pre_transform, pre_filter,
                          force_reload=force_reload)
         self.featurize = featurize
+        self.processed_url = self.get_processed_url()
         self.load(self.processed_paths[0])
 
     def mean(self, target: int) -> float:
