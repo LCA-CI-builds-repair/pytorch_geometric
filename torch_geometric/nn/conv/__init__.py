@@ -69,6 +69,7 @@ __all__ = [
     'GCNConv',
     'ChebConv',
     'SAGEConv',
+    'SAGEConv_temporal',
     'CuGraphSAGEConv',
     'GraphConv',
     'GravNetConv',
