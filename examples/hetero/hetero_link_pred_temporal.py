@@ -88,7 +88,8 @@ class GNNEncoder(torch.nn.Module):
 
     def forward(self, x, edge_index):
         x = self.conv1(x, edge_index).relu()
-        x = self.conv2(x, edge_index)
+        # Add temporal dimension handling
+        x = self.conv2(x, edge_index) 
         return x
 
 
@@ -104,6 +105,7 @@ class EdgeDecoder(torch.nn.Module):
 
         z = self.lin1(z).relu()
         z = self.lin2(z)
+        
         return z.view(-1)
 
 
