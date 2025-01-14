@@ -57,6 +57,7 @@ except Exception as e:
     WITH_SAMPLED_OP = False
     WITH_INDEX_SORT = False
     WITH_METIS = False
+    WITH_EDGE_TIME_NEIGHBOR_SAMPLE = False
     WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
 
 try:
@@ -342,3 +343,4 @@ MaybeHeteroEdgeTensor = Union[Tensor, Dict[EdgeType, Tensor]]
 
 InputNodes = Union[OptTensor, NodeType, Tuple[NodeType, OptTensor]]
 InputEdges = Union[OptTensor, EdgeType, Tuple[EdgeType, OptTensor]]
+with_edge_time_neighbor_sample = WITH_EDGE_TIME_NEIGHBOR_SAMPLE
