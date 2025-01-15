@@ -147,7 +147,7 @@ class QM9(InMemoryDataset):
                'molnet_publish/qm9.zip')
     raw_url2 = 'https://ndownloader.figshare.com/files/3195404'
 
-    if self.featurize:
+    if self.featurize and rdkit is not None:
         processed_url = 'https://data.pyg.org/datasets/qm9_v3_featurized.zip'
     else:
         processed_url = 'https://data.pyg.org/datasets/qm9_v3.zip'
