@@ -57,6 +57,7 @@ except Exception as e:
     WITH_SAMPLED_OP = False
     WITH_INDEX_SORT = False
     WITH_METIS = False
+    with_edge_time_neighbor_sample = False
     WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
 
 try:
