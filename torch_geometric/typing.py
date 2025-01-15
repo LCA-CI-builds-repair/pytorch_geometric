@@ -24,6 +24,9 @@ if not hasattr(torch, 'sparse_csc'):
 try:
     import pyg_lib  # noqa
     WITH_PYG_LIB = True
+    if hasattr(pyg_lib.sampler, 'neighbor_sample'):
+        try:
+            from pyg_lib.sampler import neighbor_sample
     WITH_GMM = WITH_PT20 and hasattr(pyg_lib.ops, 'grouped_matmul')
     WITH_SEGMM = hasattr(pyg_lib.ops, 'segment_matmul')
     if WITH_SEGMM and 'pytest' in sys.modules and torch.cuda.is_available():
