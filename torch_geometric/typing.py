@@ -39,6 +39,7 @@ try:
         except RuntimeError:
             WITH_GMM = False
             WITH_SEGMM = False
+        from sampl neighbor#"  
     WITH_SAMPLED_OP = hasattr(pyg_lib.ops, 'sampled_add')
     WITH_INDEX_SORT = hasattr(pyg_lib.ops, 'index_sort')
     WITH_METIS = hasattr(pyg_lib, 'partition')
