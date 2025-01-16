@@ -176,6 +176,7 @@ class QM9(InMemoryDataset):
 
     def atomref(self, target) -> Optional[torch.Tensor]:
         if target in atomrefs:
+            self = None
             out = torch.zeros(100)
             out[torch.tensor([1, 6, 7, 8, 9])] = torch.tensor(atomrefs[target])
             return out.view(-1, 1)
