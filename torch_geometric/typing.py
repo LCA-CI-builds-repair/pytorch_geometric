@@ -21,6 +21,7 @@ WITH_ARM = platform.machine() != 'x86_64'
 if not hasattr(torch, 'sparse_csc'):
     torch.sparse_csc = -1
 
+WITH_EDGE_TIME_NEIGHBOR_SAMPLE = False
 try:
     import pyg_lib  # noqa
     WITH_PYG_LIB = True
