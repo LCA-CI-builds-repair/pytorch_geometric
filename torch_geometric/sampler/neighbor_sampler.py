@@ -35,7 +35,126 @@ NumNeighborsType = Union[NumNeighbors, List[int], Dict[EdgeType, List[int]]]
 class NeighborSampler(BaseSampler):
     r"""An implementation of an in-memory (heterogeneous) neighbor sampler used
     by :class:`~torch_geometric.loader.NeighborLoader`.
-    """
+    def __init__(
+        self,
+        data: Union[Data, HeteroData, Tuple[FeatureStore, GraphStore]],
+        num_neighbors: NumNeighborsType,
+        subgraph_type: Union[SubgraphType, str] = 'directional',
+        replace: bool = False,
+        disjoint: bool = False,
+        temporal_strategy: str = 'uniform',
+        temporal_entity: Optional[str] = 'node',
+        time_attr: Optional[str] = None,
+        weight_attr: Optional[str] = None,
+        is_sorted: bool = False,
+        share_memory: bool = False,
+        # Deprecated:
+        directed: bool = True,
+    ):
+        if not directed:
+            subgraph_type = SubgraphType.induced
+            warnings.warn(f"The usage of the 'directed' argument in "
+                          f"'{self.__class__.__name__}' is deprecated. Use "
+                          f"`subgraph_type='induced'` instead.")
+
+        if (not torch_geometric.typing.WITH_PYG_LIB and sys.platform == 'linux'
+                and subgraph_type != SubgraphType.induced):
+            warnings.warn(f"Using '{self.__class__.__name__}' without a "
+                          f"'pyg-lib' installation is deprecated and will be "
+                          f"removed soon. Please install 'pyg-lib' for "
+                          f"accelerated neighborhood sampling")
+
+        self.data_type = DataType.from_data(data)
+
+        if self.data_type == DataType.homogeneous:
+            self.num_nodes = data.num_nodes
+
+            self.node_time: Optional[Tensor] = None
+            self.edge_time: Optional[Tensor] = None
+            if time_attr is not None and temporal_entity == 'node':
+                self.node_time = data[time_attr]
+            elif time_attr is not None and temporal_entity == 'edge':
+                self.edge_time = data[time_attr]
+
+            # Convert the graph data into CSC format for sampling:
+            self.colptr, self.row, self.perm = to_csc(
+                data, device='cpu', share_memory=share_memory,
+                is_sorted=is_sorted, src_node_time=self.node_time,
+                edge_time=self.edge_time)
+
+            self.edge_weight: Optional[Tensor] = None
+            if time_attr is not None and temporal_entity == 'edge':
+                self.edge_time = data[time_attr]
+                if self.perm is not None:
+                    self.edge_time = self.edge_time[self.perm]
+            if weight_attr is not None:
+                self.edge_weight = data[weight_attr]
+                if self.perm is not None:
+                    self.edge_weight = self.edge_weight[self.perm]
+
+        elif self.data_type == DataType.heterogeneous:
+            self.node_types, self.edge_types = data.metadata()
+
+            self.num_nodes = {k: data[k].num_nodes for k in self.node_types}
+
+            self.node_time: Optional[Dict[NodeType, Tensor]] = None
+            if time_attr is not None and temporal_entity == 'node':
+                self.node_time = data.collect(time_attr)
+            self.edge_time: Optional[Dict[EdgeType, Tensor]] = None
+            if time_attr is not None and temporal_entity == 'edge':
+                self.edge_time = data.collect(time_attr)
+
+            # Conversion to/from C++ string type: Since C++ cannot take
+            # dictionaries with tuples as key as input, edge type triplets need
+            # to be converted into single strings.
+            self.to_rel_type = {k: '__'.join(k) for k in self.edge_types}
+            self.to_edge_type = {v: k for k, v in self.to_rel_type.items()}
+            # Convert the graph data into CSC format for sampling:
+            colptr_dict, row_dict, self.perm = to_hetero_csc(
+                data, device='cpu', share_memory=share_memory,
+                is_sorted=is_sorted, node_time_dict=self.node_time,
+                edge_time_dict=self.edge_time)
+            self.row_dict = remap_keys(row_dict, self.to_rel_type)
+            self.colptr_dict = remap_keys(colptr_dict, self.to_rel_type)
+            self.edge_time: Optional[Dict[EdgeType, Tensor]] = None
+            if time_attr is not None and temporal_entity == 'edge':
+                self.edge_time = data.collect(time_attr)
+                for edge_type, edge_time in self.edge_time.items():
+                    if self.perm.get(edge_type, None) is not None:
+                        edge_time = edge_time[self.perm[edge_type]]
+                        self.edge_time[edge_type] = edge_time
+                self.edge_time = remap_keys(self.edge_time, self.to_rel_type)
+            self.edge_weight: Optional[Dict[EdgeType, Tensor]] = None
+            if weight_attr is not None:
+                self.edge_weight = data.collect(weight_attr)
+                for edge_type, edge_weight in self.edge_weight.items():
+                    if self.perm.get(edge_type, None) is not None:
+                        edge_weight = edge_weight[self.perm[edge_type]]
+                        self.edge_weight[edge_type] = edge_weight
+                self.edge_weight = remap_keys(self.edge_weight,
+                                              self.to_rel_type)
+        else:  # self.data_type == DataType.remote
+            feature_store, graph_store = data
+
+            # Obtain graph metadata:
+            node_attrs = [
+                attr for attr in feature_store.get_all_tensor_attrs()
+                if isinstance(attr.group_name, NodeType)  # Heterogeneous ...
+                or attr.group_name is None  # ... or homogeneous.
+            ]
+            self.node_types = list(set(attr.group_name for attr in node_attrs))
+
+            edge_attrs = graph_store.get_all_edge_attrs()
+            self.edge_types = list(set(attr.edge_type for attr in edge_attrs))
+
+            if weight_attr is not None:
+                raise NotImplementedError(
+                    f"'weight_attr' argument not yet supported within "
+                    f"'{self.__class__.__name__}' for "
+                    f"'(FeatureStore, GraphStore)' inputs")
+
+            if time_attr is not None:
+                # If the `time
     def __init__(
         self,
         data: Union[Data, HeteroData, Tuple[FeatureStore, GraphStore]],
