@@ -58,6 +58,7 @@ except Exception as e:
     WITH_INDEX_SORT = False
     WITH_METIS = False
     WITH_WEIGHTED_NEIGHBOR_SAMPLE = False
+    WITH_EDGE_TIME_NEIGHBOR_SAMPLE = False
 
 try:
     import torch_scatter  # noqa
