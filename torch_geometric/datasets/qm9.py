@@ -233,6 +233,10 @@ class QM9(InMemoryDataset):
             if self.pre_transform is not None:
                 data_list = [self.pre_transform(d) for d in data_list]
 
+            if self.featurize:
+            self.save(data_list, self.processed_paths[0])
+        else:
+            print("Warning: Featurized dataset is not saved.")
             self.save(data_list, self.processed_paths[0])
             return
 
