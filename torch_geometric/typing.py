@@ -248,13 +248,21 @@ class MockTorchCSCTensor:
         self.edge_attr = edge_attr
         self.size = size
 
+    def __init__(
+        self,
+        edge_index: Tensor,
+        edge_attr: Optional[Tensor] = None,
+        size: Optional[Union[int, Tuple[int, int]]] = None,
+    ):
+        if size is not None and not isinstance(size, (tuple, list)):
+            raise ValueError("Size must be a tuple or list")
     def t(self) -> Tensor:  # Only support accessing its transpose:
         from torch_geometric.utils import to_torch_csr_tensor
-        size = self.size
+        size = self.size if isinstance(self.size, (tuple, list)) else None
         return to_torch_csr_tensor(
             self.edge_index.flip([0]),
             self.edge_attr,
-            size[::-1] if isinstance(size, (tuple, list)) else size,
+            size[::-1] if size else None,
         )
 
 
