@@ -9,7 +9,7 @@ import torch_geometric.transforms as T
 from torch_geometric.datasets import MovieLens
 from torch_geometric.loader import LinkNeighborLoader
 from torch_geometric.nn import to_hetero
-from torch_geometric.nn.conv import SAGEConv
+from torch_geometric.nn.conv import SAGEConv  # Ensure this is correct import
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--use_weighted_loss', action='store_true',
